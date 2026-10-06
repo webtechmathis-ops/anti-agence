@@ -1,0 +1,16 @@
+# Redirections pages supprimées (templates Divi + archives auteur)
+/author/*          /   301
+/layout_type/*     /   301
+/module_width/*    /   301
+/scope/*           /   301
+
+# Ressources WordPress inexistantes en statique
+/feed              /   404
+/feed/             /   404
+/comments/feed     /   404
+/comments/feed/    /   404
+/wp-json/*         /   404
+/xmlrpc.php        /   404
+/wp-login.php      /   404
+/wp-admin          /   404
+/wp-admin/*        /   404
