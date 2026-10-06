@@ -16,7 +16,7 @@ Activité : freelance création de site internet, SEO et GEO, Vernon (Eure, 27)
 5. **Aucun secret dans le repo** (tokens, clés API, mots de passe). `.env*`, `.vercel/`, `.netlify/`, `node_modules/` dans `.gitignore`.
 6. **Allégations commerciales prudentes.** Pas de "n°1", "meilleur", "classement indépendant", note étoilée ou pourcentage de résultat sans preuve fournie par Mathis (voir section 5). Recommandation de prudence, pas un avis juridique.
 7. **Rédaction** : français, le visiteur est vouvoyé, Mathis parle au "je" (freelance solo, plus de "nous" ni de "nos experts"), pas de tiret long (utiliser : , ou -), pas de jargon non expliqué, corriger les fautes au passage.
-8. **Commits petits et clairs.** Pas de push sur `main` sans accord. Le repo n'a encore aucun commit (voir section 3).
+8. **Commits petits et clairs.** Commits locaux autorisés par Mathis ; pas de push sans accord.
 9. **Lancer le skill `preflight` après chaque page modifiée** (`npm run build` puis contrôle de `dist/`).
 
 ## 2. Contexte
@@ -28,13 +28,16 @@ Objectifs : être trouvé sur "création site internet Vernon", "SEO Vernon", "f
 
 ## 3. État technique du repo (au 2026-10-06)
 
-- **Socle Astro 7 en place** (`src/`, `public/`, `astro.config.mjs`). Accueil refait (`src/pages/index.astro`), les 11 autres pages restent à migrer.
+- **Les 12 pages sont migrées sur Astro 7** (`src/pages/`) + une page 404. Pages métier générées par `src/pages/[metier]/index.astro` depuis `src/data/metiers.ts`, articles via `src/layouts/ArticleLayout.astro`.
+- Données : `src/data/site.ts` (identité, légal, offre, nav), `tarifs.ts` (seule source de prix), `metiers.ts`, `faq.ts`. Composants : Header, Footer, Breadcrumb, PageHero, Marquee, FaqList, OfferBanner, PriceCard, CtaBand.
+- `compressHTML: false` dans `astro.config.mjs` : la compression collait les mots autour des liens et du gras.
+- `netlify.toml` : build, cache long sur `/_astro/*` et `/fonts/*`, en-têtes de sécurité.
 - **Ancien export WordPress/Divi déplacé dans `legacy/`** : source de contenu uniquement, ni servi ni buildé. À supprimer du repo une fois toutes les pages migrées.
 - `wp-content/` et `wp-includes/` retirés de l'index git (l'export complet reste dans `../anti-agence.zip`, 187 Mo). Images utiles extraites, renommées sans "vannes", dans `src/assets/`.
-- **Aucun commit** pour l'instant.
+- Commits locaux sur `main`, rien de poussé.
 - Logo : `src/assets/brand/logo-anti-agence.png` (lettrage "ANTI AGENCE" bleu `#5271ff`, rogné). Favicon redessiné en SVG (`public/favicon.svg`, 2 quarts de cercle + 2 pastilles), `apple-touch-icon.png`, `og-default.jpg` (1200x630).
 - npm : le cache `~/.npm` a des fichiers root, installer avec `npm install --cache <dossier temporaire>` ou corriger les droits (`sudo chown -R $(whoami) ~/.npm`).
-- Baseline de l'ancien site (2026-10-06) : 12 pages, 234 erreurs, 18 alertes. Nouveau build : 1 page, 0 alerte, 9 erreurs = uniquement les liens vers les pages pas encore migrées.
+- Baseline de l'ancien site (2026-10-06) : 12 pages, 234 erreurs, 18 alertes. Nouveau build : 12 pages, 0 alerte, 7 erreurs = uniquement le marqueur `A CONFIRMER` de la date de fin de l'offre (voulu, bloque la mise en ligne tant qu'elle n'est pas validée).
 
 ## 4. Faits sources (seule base autorisée)
 
@@ -67,10 +70,23 @@ Objectifs : être trouvé sur "création site internet Vernon", "SEO Vernon", "f
 
 Inclus site One-page : design responsive, SSL, formulaire de contact, intégration des contenus, hébergement et nom de domaine 1 an.
 
+### Statut légal (donné par Mathis le 2026-10-06)
+- Entrepreneur individuel, micro-entrepreneur. SIRET 982 549 917 00010.
+- Adresse (mentions légales uniquement) : 2B rue d'Aubigny, Civières, 27630 Vexin-sur-Epte.
+- TVA non applicable, art. 293 B du CGI (prix nets).
+- Hébergeur : Netlify, Inc., 101 2nd Street, San Francisco, CA 94105 (adresse vérifiée sur netlify.com/privacy).
+
+### Offres commerciales (décision de Mathis le 2026-10-06)
+- -10 % sur toutes les prestations, durée limitée.
+- Parrainage : le filleul a 10 % supplémentaires (cumul -20 % pendant l'offre), le parrain a -10 % sur sa prochaine prestation.
+- Réglages dans `src/data/site.ts` (`OFFRE`). Date de fin non fournie : `2026-12-31` proposé, `finConfirmee: false` tant que Mathis n'a pas validé.
+
 ### Services présentés (accueil)
 Référencement naturel SEO & GEO, campagnes Google Ads, création de site, netlinking, accompagnement global, bilan de performances. Méthode en 3 étapes : écoute et stratégie locale, site optimisé, référencement et suivi continu.
 
 ## 5. Allégations à valider ou retirer avant publication
+
+État au 2026-10-06 : tout ce qui suit est **retiré du nouveau site**, et les prix de toutes les pages sont alignés sur `tarifs.ts`. Les points 4 et 6 sont réglés (statut légal fourni, tarifs alignés).
 
 **Décision du 2026-10-06 : tout ce qui suit est retiré de la refonte.** Réintégration possible seulement quand Mathis fournit la preuve (capture, source, période, accord du client), affichée avec son contexte.
 1. `/meilleur-freelance-seo-geo-vernon/` : "Freelance #1 à Vernon", "le plus expérimenté de Vernon", "Classement indépendant", note 5/5. Un classement rédigé par le prestataire classé n'est pas indépendant : risque de pratique commerciale trompeuse et de perte de confiance. Proposition : page comparative honnête (critères, méthode) ou page "pourquoi un freelance plutôt qu'une agence".
@@ -161,21 +177,22 @@ Utilisateur et plugins (déjà installés) :
 
 ## 10. Décisions
 
-Prises le 2026-10-06 : stack Astro, hébergement Netlify, accent bleu `#5271ff`, retrait des allégations non prouvées et passage au "je".
+Prises le 2026-10-06 : stack Astro, hébergement Netlify, accent bleu `#5271ff`, retrait des allégations non prouvées, passage au "je", design de l'accueil validé, tarifs alignés partout sur la page tarifs, offre -10 % + parrainage, statut micro-entrepreneur, TVA non applicable, adresse publiée dans les mentions légales.
 
 Encore ouvertes (demander à Mathis) :
-1. Validation du design de l'accueil avant de migrer les autres pages.
-2. Statut juridique et SIRET pour les mentions légales.
-3. Tarifs contradictoires des pages métier (section 5, point 6).
+1. **Date de fin de l'offre -10 %** (bloquant pour la mise en ligne, voir `OFFRE.fin`).
+2. Le parrainage continue-t-il après la fin de l'offre ? Le parrain a-t-il un délai pour utiliser sa remise ?
+3. Clients particuliers (B2C) : si oui, désigner un médiateur de la consommation (obligatoire) et l'ajouter aux mentions légales. Des CGV seraient aussi utiles.
 4. Formulaire de contact (Netlify Forms + anti-spam ?) ou email seul ; prise de RDV (le site avait Simply Schedule Appointments).
-5. Mesure d'audience : garder Google Analytics avec bandeau cookies, passer à une solution exemptée CNIL, ou rien.
-6. Robots.txt : autoriser ou non les crawlers IA d'entraînement (GPTBot, ClaudeBot, Google-Extended). Les crawlers de recherche IA (OAI-SearchBot, PerplexityBot) sont à autoriser pour le GEO.
-7. Projets réels à montrer en réalisations (avec accord des clients).
+5. Mesure d'audience : aucune pour l'instant (mentions légales rédigées en ce sens). Si ajout, passer par une solution exemptée de consentement CNIL ou un bandeau.
+6. Robots.txt : autoriser ou non les crawlers IA d'entraînement (GPTBot, ClaudeBot, Google-Extended). Les crawlers de recherche IA (OAI-SearchBot, PerplexityBot) sont à autoriser pour le GEO. Actuellement tout est autorisé.
+7. Projets réels à montrer en réalisations (avec accord des clients), et page `/a-propos/` avec photo de Mathis.
+8. Création du site Netlify, preview, puis bascule DNS depuis Hostinger.
 
 ## 11. Méthode
 
 1. Relire ce fichier, poser les questions encore ouvertes de la section 10.
-2. Proposer un plan et une maquette de l'accueil, attendre validation.
-3. Initialiser Astro, construire le socle (tokens, BaseLayout, header, footer), puis page par page en reprenant le contenu de l'export.
+2. Pour toute nouvelle page : skill `page-seo-geo`, données dans `src/data/`, composants existants.
+3. Ne jamais recopier un prix en dur : lire `tarifs.ts` et `OFFRE`.
 4. `preflight` + `web-design-guidelines` à chaque page, preview Netlify à chaque étape.
 5. Validation de Mathis, puis mise en production et Search Console.
