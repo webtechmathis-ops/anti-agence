@@ -1,0 +1,139 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import FaqList from '../components/FaqList.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { SITE } from '../data/site';
+
+interface Props {
+  title: string;
+  description: string;
+  path: string;
+  h1: string;
+  chapo: string;
+  section: string;
+  published: string; // ISO
+  modified: string; // ISO
+  readingMinutes: number;
+  toc: { id: string; label: string }[];
+  faq: { q: string; a: string }[];
+}
+
+const { title, description, path, h1, chapo, section, published, modified, readingMinutes, toc, faq } = Astro.props;
+const fmt = (iso: string) => new Date(iso).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+const url = `${SITE.url}${path}`;
+
+const schema = [
+  {
+    '@type': 'Article',
+    '@id': `${url}#article`,
+    headline: h1,
+    description,
+    inLanguage: 'fr-FR',
+    articleSection: section,
+    datePublished: published,
+    dateModified: modified,
+    author: { '@id': `${SITE.url}/#mathis` },
+    publisher: { '@id': `${SITE.url}/#org` },
+    mainEntityOfPage: { '@id': `${url}#webpage` },
+    image: `${SITE.url}/og-default.jpg`,
+  },
+  {
+    '@type': 'FAQPage',
+    '@id': `${url}#faq`,
+    mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  },
+];
+---
+<BaseLayout
+  title={title}
+  description={description}
+  path={path}
+  breadcrumb={[{ name: 'Accueil', path: '/' }, { name: 'Guides', path: '/faq-seo-vernon/' }, { name: section, path }]}
+  schema={schema}
+>
+  <header class="wrap article-head">
+    <p class="kicker">Guide {section}</p>
+    <h1 class="display-sm article-title">{h1}</h1>
+    <p class="lead chapo">{chapo}</p>
+    <ul role="list" class="meta">
+      <li>Par <a href="/meilleur-freelance-seo-geo-vernon/">{SITE.owner}</a>, consultant SEO et GEO</li>
+      <li>Publié le <time datetime={published}>{fmt(published)}</time></li>
+      <li>Mis à jour le <time datetime={modified}>{fmt(modified)}</time></li>
+      <li>{readingMinutes} min de lecture</li>
+    </ul>
+  </header>
+
+  <div class="wrap article-grid">
+    <nav class="toc" aria-labelledby="toc-title">
+      <p class="toc-title" id="toc-title">Sommaire</p>
+      <ol role="list">
+        {toc.map((t) => <li><a href={`#${t.id}`}>{t.label}</a></li>)}
+        <li><a href="#faq-title">Questions fréquentes</a></li>
+      </ol>
+    </nav>
+
+    <article class="article">
+      <slot />
+
+      <h2 id="faq-title">Questions fréquentes</h2>
+      <FaqList items={faq} />
+
+      <aside class="author" aria-label="À propos de l’auteur">
+        <p class="author-name">{SITE.owner}</p>
+        <p>
+          Consultant SEO et GEO freelance à Vernon, fondateur d’Anti-Agence. J’accompagne les artisans, commerçants,
+          restaurateurs et hôtels de l’Eure sur leur site et leur visibilité.
+        </p>
+        <a href="/meilleur-freelance-seo-geo-vernon/">En savoir plus sur mon approche</a>
+      </aside>
+    </article>
+  </div>
+
+  <CtaBand />
+</BaseLayout>
+
+<style>
+  .article-head { padding-block: clamp(2rem, 1rem + 3vw, 3.5rem) clamp(2.5rem, 1.5rem + 3vw, 4rem); }
+  .kicker { font-weight: 600; margin-bottom: 1.25rem; }
+  .article-title { max-width: 18ch; }
+  .chapo { margin-top: 1.75rem; max-width: 52ch; }
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.75rem;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--line);
+    font-size: var(--fs-small);
+    color: var(--muted);
+  }
+  .meta a { color: var(--ink); font-weight: 650; }
+
+  .article-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 15rem) minmax(0, 46rem);
+    gap: clamp(2rem, 1rem + 5vw, 6rem);
+    align-items: start;
+    padding-bottom: var(--section);
+  }
+  .toc { position: sticky; top: calc(var(--header-h) + 2rem); font-size: var(--fs-small); }
+  .toc-title { font-weight: 700; padding-bottom: 0.6rem; border-bottom: 2px solid var(--ink); }
+  .toc li { border-bottom: 1px solid var(--line); }
+  .toc a { display: block; padding-block: 0.55rem; text-decoration: none; color: var(--muted); }
+  .toc a:hover { color: var(--ink); }
+
+  .author {
+    margin-top: 3rem;
+    padding: 1.5rem;
+    border: 2px solid var(--ink);
+    border-radius: var(--radius);
+    font-size: 1rem;
+  }
+  .author-name { font-weight: 800; font-size: var(--fs-h3); }
+  .author p + p, .author a { margin-top: 0.5rem; display: inline-block; }
+
+  @media (max-width: 64rem) {
+    .article-grid { grid-template-columns: minmax(0, 1fr); }
+    .toc { position: static; }
+  }
+</style>

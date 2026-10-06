@@ -1,0 +1,75 @@
+---
+import type { Formule } from '../data/tarifs';
+import { OFFRE, formatPrice, remise } from '../data/site';
+
+interface Props { formule: Formule; headingLevel?: 'h2' | 'h3' }
+const { formule: f, headingLevel: H = 'h3' } = Astro.props;
+const featured = Boolean(f.badge);
+---
+<article class:list={['card', { 'card-featured': featured }]} id={f.id}>
+  {f.badge && <p class="card-badge">{f.badge}</p>}
+  <H class="card-name">{f.name}</H>
+  <p class="card-pitch">{f.pitch}</p>
+  <p class="card-price">
+    <span class="card-from">à partir de</span>
+    <span class="card-amount">{formatPrice(f.price)}{f.unit}</span>
+    <span class="card-offer">{formatPrice(remise(f.price))} avec l’offre -{OFFRE.remise}&nbsp;%</span>
+  </p>
+  <ul role="list" class="dots card-list">
+    {f.includes.map((item) => <li>{item}</li>)}
+  </ul>
+</article>
+
+<style>
+  .card {
+    display: flex;
+    flex-direction: column;
+    padding: clamp(1.5rem, 1rem + 1.5vw, 2rem);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--paper);
+    scroll-margin-top: calc(var(--header-h) + 1rem);
+  }
+  .card { position: relative; }
+  .card-featured { border: 2px solid var(--ink); }
+  .card-badge {
+    position: absolute;
+    top: 0;
+    left: clamp(1.5rem, 1rem + 1.5vw, 2rem);
+    transform: translateY(-50%);
+    border: 2px solid var(--ink);
+    padding: 0.3rem 0.8rem;
+    border-radius: 999px;
+    background: var(--blue);
+    color: var(--ink);
+    font-size: var(--fs-small);
+    font-weight: 700;
+  }
+  .card-name {
+    font-size: clamp(1.625rem, 1.3rem + 1vw, 2rem);
+    font-weight: 800;
+    font-stretch: 82%;
+    font-variation-settings: 'opsz' 48;
+    line-height: 1.05;
+  }
+  .card-pitch { margin-top: 0.4rem; color: var(--muted); }
+  .card-price {
+    display: flex;
+    flex-direction: column;
+    margin-block: 1.5rem;
+    padding-block: 1.25rem;
+    border-block: 1px solid var(--line);
+  }
+  .card-from { font-size: var(--fs-small); color: var(--muted); }
+  .card-amount {
+    font-size: clamp(2.5rem, 2rem + 2vw, 3.25rem);
+    font-weight: 800;
+    font-stretch: 78%;
+    font-variation-settings: 'opsz' 96;
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .card-offer { margin-top: 0.4rem; font-weight: 650; color: var(--blue-ink); }
+  .card-list { font-size: var(--fs-small); }
+</style>

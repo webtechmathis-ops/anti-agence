@@ -1,0 +1,33 @@
+---
+import { SITE } from '../data/site';
+
+interface Props {
+  title: string;
+  kicker?: string;
+  secondary?: { label: string; href: string } | false;
+}
+const { title, kicker, secondary = { label: 'Voir les tarifs', href: '/tarifs/' } } = Astro.props;
+---
+<section class="page-hero">
+  <div class="wrap">
+    {kicker && <p class="page-hero-kicker">{kicker}</p>}
+    <h1 class="display-sm page-hero-title">{title}</h1>
+    <div class="page-hero-lead lead"><slot /></div>
+    <div class="page-hero-actions">
+      <a class="btn btn-primary" href={SITE.ctaHref}>{SITE.ctaLabel}</a>
+      {secondary && <a class="btn btn-ghost" href={secondary.href}>{secondary.label}</a>}
+    </div>
+    <slot name="after" />
+  </div>
+</section>
+
+<style>
+  .page-hero { padding-block: clamp(2rem, 1rem + 3vw, 3.5rem) clamp(3.5rem, 2rem + 5vw, 6rem); }
+  .page-hero-kicker { font-weight: 600; margin-bottom: 1.25rem; }
+  .page-hero-title { max-width: 16ch; }
+  .page-hero-lead { margin-top: clamp(1.5rem, 1rem + 2vw, 2.25rem); max-width: 46ch; }
+  .page-hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2rem; }
+  @media (max-width: 30rem) {
+    .page-hero-actions .btn { width: 100%; }
+  }
+</style>

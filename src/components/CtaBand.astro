@@ -1,0 +1,42 @@
+---
+import { SITE } from '../data/site';
+
+interface Props { title?: string; text?: string }
+const {
+  title = SITE.ctaLabel,
+  text = `Un projet, une question, ou juste envie d’en parler ? Réponse et devis sous ${SITE.quoteDelay}.`,
+} = Astro.props;
+---
+<section class="cta" aria-labelledby="cta-title">
+  <div class="wrap">
+    <h2 class="display cta-title" id="cta-title">{title}</h2>
+    <div class="cta-row">
+      <p class="lead">{text}</p>
+      <div class="cta-actions">
+        <a class="btn btn-primary" href={`mailto:${SITE.email}`}>{SITE.email}</a>
+        <a class="btn btn-ghost" href={SITE.phoneHref}>{SITE.phone}</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta {
+    background: var(--blue);
+    color: var(--ink);
+    padding-block: var(--section);
+  }
+  .cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: end;
+    gap: 2rem;
+    margin-top: 2.5rem;
+  }
+  .cta-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+  .cta .btn-primary:hover { background: var(--paper); border-color: var(--ink); color: var(--ink); }
+  @media (max-width: 30rem) {
+    .cta-actions .btn { width: 100%; }
+  }
+</style>

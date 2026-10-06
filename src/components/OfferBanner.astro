@@ -1,0 +1,49 @@
+---
+import { OFFRE, offreFin } from '../data/site';
+
+interface Props { link?: boolean }
+const { link = true } = Astro.props;
+---
+{!OFFRE.finConfirmee && <Fragment set:html="<!-- A CONFIRMER : date de fin de l'offre (src/data/site.ts, OFFRE.fin) -->" />}
+<aside class="offer" aria-label="Offre en cours">
+  <p class="offer-pct" aria-hidden="true">-{OFFRE.remise}&nbsp;%</p>
+  <div class="offer-body">
+    <p class="offer-main">
+      <strong>-{OFFRE.remise}&nbsp;% sur toutes les prestations</strong> jusqu’au {offreFin}.
+    </p>
+    <p class="offer-sub">
+      Recommandé par un client ? {OFFRE.parrainage}&nbsp;% de plus pour vous, et {OFFRE.parrainage}&nbsp;% pour votre parrain sur sa prochaine prestation.
+    </p>
+    {link && <a class="link" href="/tarifs/#offre">Conditions de l’offre</a>}
+  </div>
+</aside>
+
+<style>
+  .offer {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: clamp(1.25rem, 0.5rem + 3vw, 2.5rem);
+    align-items: center;
+    padding: clamp(1.25rem, 0.75rem + 2vw, 2rem);
+    border: 2px solid var(--ink);
+    border-radius: var(--radius);
+    background: var(--paper);
+  }
+  .offer-pct {
+    font-size: clamp(3rem, 2rem + 4vw, 5.5rem);
+    font-weight: 800;
+    font-stretch: 78%;
+    font-variation-settings: 'opsz' 96;
+    line-height: 0.85;
+    letter-spacing: -0.03em;
+    color: var(--blue);
+    -webkit-text-stroke: 2px var(--ink);
+    paint-order: stroke fill;
+  }
+  .offer-main { font-size: var(--fs-lead); line-height: 1.35; }
+  .offer-sub { margin-top: 0.5rem; color: var(--muted); max-width: 52ch; }
+  .offer .link { display: inline-block; margin-top: 0.75rem; }
+  @media (max-width: 30rem) {
+    .offer { grid-template-columns: minmax(0, 1fr); }
+  }
+</style>

@@ -3,7 +3,10 @@ import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Marquee from '../components/Marquee.astro';
 import FaqList from '../components/FaqList.astro';
-import { FAQ_ACCUEIL, METHODE, METIERS, SERVICES, SITE, SITES, formatPrice } from '../data/site';
+import { FAQ_ACCUEIL, METHODE, METIERS, SERVICES, SITE, formatPrice } from '../data/site';
+import { SITES } from '../data/tarifs';
+import OfferBanner from '../components/OfferBanner.astro';
+import CtaBand from '../components/CtaBand.astro';
 
 import imgArtisan from '../assets/metiers/artisan-electricien.webp';
 import imgCommercant from '../assets/metiers/commercant-fleuriste.webp';
@@ -178,6 +181,7 @@ const schema = [
         </tbody>
       </table>
     </div>
+    <div class="wrap offer-row"><OfferBanner /></div>
   </section>
 
   <!-- GEO -->
@@ -219,38 +223,10 @@ const schema = [
     </div>
   </section>
 
-  <!-- Contact -->
-  <section class="cta" aria-labelledby="cta-title">
-    <div class="wrap">
-      <h2 class="display cta-title" id="cta-title">{SITE.ctaLabel}</h2>
-      <div class="cta-row">
-        <p class="lead">Un projet, une question, ou juste envie d’en parler ? Réponse et devis sous {SITE.quoteDelay}.</p>
-        <div class="cta-actions">
-          <a class="btn btn-primary" href={`mailto:${SITE.email}`}>{SITE.email}</a>
-          <a class="btn btn-ghost" href={SITE.phoneHref}>{SITE.phone}</a>
-        </div>
-      </div>
-    </div>
-  </section>
+  <CtaBand />
 </BaseLayout>
 
 <style>
-  /* Sections */
-  .section { padding-block: var(--section); }
-  .section-tight-top { padding-top: 0; }
-  .section-ink { background: var(--ink); color: var(--paper); }
-  .ask-on-ink { color: #b4b4ba; }
-
-  .split {
-    display: grid;
-    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-    gap: clamp(2.5rem, 1rem + 5vw, 6rem);
-    align-items: start;
-  }
-  .split-head { position: sticky; top: calc(var(--header-h) + 2rem); }
-  .split-intro { margin-block: 1.5rem; max-width: 40ch; }
-  .split-head > .link { display: inline-block; margin-top: 1.25rem; }
-  .split-intro + .link { margin-top: 0; }
 
   /* Hero */
   .hero { padding-block: clamp(2.5rem, 1rem + 5vw, 5.5rem) clamp(3.5rem, 2rem + 5vw, 6.5rem); }
@@ -375,6 +351,8 @@ const schema = [
     white-space: nowrap;
   }
 
+  .offer-row { margin-top: clamp(2.5rem, 1rem + 4vw, 4rem); }
+
   /* GEO */
   .geo { background: var(--blue-wash); }
   .geo-inner {
@@ -386,30 +364,11 @@ const schema = [
   .geo-text { margin-block: 1.5rem; }
   .geo-mark { width: 100%; max-width: 22rem; justify-self: end; fill: var(--blue); }
 
-  /* Contact */
-  .cta {
-    background: var(--blue);
-    color: var(--ink);
-    padding-block: var(--section);
-  }
-  .cta-row {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: end;
-    gap: 2rem;
-    margin-top: 2.5rem;
-  }
-  .cta-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
-  .cta .btn-primary:hover { background: var(--paper); border-color: var(--ink); color: var(--ink); }
-
   /* Responsive */
   @media (max-width: 64rem) {
     .metiers { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .hero-grid,
-    .split,
     .geo-inner { grid-template-columns: minmax(0, 1fr); }
-    .split-head { position: static; }
     .geo-mark { max-width: 9rem; justify-self: start; order: -1; }
   }
   @media (max-width: 48rem) {
@@ -422,7 +381,6 @@ const schema = [
     .metiers { gap: 1.5rem 0.875rem; }
     .metier-name { font-size: 1.0625rem; }
     .ledger td { font-size: var(--fs-small); }
-    .hero-actions .btn,
-    .cta-actions .btn { width: 100%; }
+    .hero-actions .btn { width: 100%; }
   }
 </style>

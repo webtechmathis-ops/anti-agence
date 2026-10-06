@@ -15,6 +15,26 @@ export const SITE = {
   ctaHref: '/contact-et-devis/',
 } as const;
 
+// Mentions légales (validées par Mathis le 2026-10-06).
+export const LEGAL = {
+  status: 'Entrepreneur individuel (micro-entrepreneur)',
+  siret: '982 549 917 00010',
+  address: '2B rue d’Aubigny, Civières, 27630 Vexin-sur-Epte',
+  vat: 'TVA non applicable, art. 293 B du CGI',
+  host: 'Netlify, Inc., 101 2nd Street, San Francisco, CA 94105, États-Unis (netlify.com)',
+} as const;
+
+// Offres commerciales (décision de Mathis le 2026-10-06).
+export const OFFRE = {
+  remise: 10, // % sur toutes les prestations, durée limitée
+  parrainage: 10, // % supplémentaires pour le filleul, et % offerts au parrain sur sa prochaine prestation
+  fin: '2026-12-31', // date de fin proposée, non fournie par Mathis
+  finConfirmee: false, // passer à true une fois la date validée (sinon le preflight bloque)
+} as const;
+
+export const offreFin = new Date(`${OFFRE.fin}T23:59:59`).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+export const remise = (n: number, pct: number = OFFRE.remise) => Math.round(n * (1 - pct / 100));
+
 export const NAV = [
   { label: 'Services', href: '/#services' },
   { label: 'Métiers', href: '/#metiers' },
@@ -43,14 +63,6 @@ export const METHODE = [
   { title: 'J’écoute et je fixe la stratégie', text: 'On parle de votre métier, de vos clients et de votre zone. J’en tire les recherches à viser et le site qu’il vous faut.' },
   { title: 'Je construis un site optimisé', text: 'Vitrine ou e-commerce, le site est pensé pour le mobile, la vitesse et le référencement dès la mise en ligne.' },
   { title: 'Je fais grandir votre visibilité', text: 'Audits, contenus, fiche Google Business Profile, liens : je suis vos résultats dans la durée.' },
-] as const;
-
-// Tarifs : copie exacte de /tarifs/ (prix « à partir de »).
-export const SITES = [
-  { name: 'One-page', pages: '1 page', price: 840, note: 'Hébergement et nom de domaine 1 an inclus' },
-  { name: 'One-five', pages: '1 à 5 pages', price: 1240, note: 'Le plus populaire' },
-  { name: 'Five-more', pages: '5 à 10 pages', price: 1740, note: 'Galeries, témoignages, FAQ' },
-  { name: 'E-commerce', pages: 'Boutique en ligne', price: 2540, note: 'Paiement, livraison, formation' },
 ] as const;
 
 export const formatPrice = (n: number) => `${n.toLocaleString('fr-FR').replace(/ /g, ' ')} €`;
