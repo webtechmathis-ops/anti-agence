@@ -1,0 +1,135 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import OfferBanner from '../../components/OfferBanner.astro';
+import { SITE } from '../../data/site';
+
+const mailto = `mailto:${SITE.email}?subject=${encodeURIComponent('Demande de devis')}`;
+const brief = [
+  { title: 'Votre activité', text: 'Votre métier, votre ville, et votre site actuel si vous en avez un.' },
+  { title: 'Votre objectif', text: 'Plus d’appels, des réservations, vendre en ligne, apparaître sur Google ou dans les IA…' },
+  { title: 'Ce dont vous avez besoin', text: 'Un site, du référencement, de la publicité, ou un peu de tout. Pas besoin de connaître le vocabulaire.' },
+  { title: 'Vos délais et votre budget', text: 'Même approximatifs : ils m’aident à proposer la bonne formule.' },
+  { title: 'Votre parrain', text: 'Si un client vous a recommandé, donnez son nom pour profiter de la remise parrainage.' },
+];
+---
+<BaseLayout
+  title="Contact et devis en 24 h | Anti-Agence, Vernon"
+  description="Un projet de site internet, de SEO ou de publicité à Vernon ? Écrivez ou appelez Mathis Bricourt, freelance : réponse et devis gratuit sous 24 h."
+  path="/contact-et-devis/"
+  breadcrumb={[{ name: 'Accueil', path: '/' }, { name: 'Contact et devis', path: '/contact-et-devis/' }]}
+>
+  <section class="contact-hero">
+    <div class="wrap">
+      <p class="kicker">Contact et devis</p>
+      <h1 class="display-sm title">Parlons de votre projet.</h1>
+      <p class="lead intro">
+        Une question, une comparaison d’offres, ou juste envie de parler de votre projet : écrivez-moi ou appelez-moi.
+        Je réponds sous {SITE.quoteDelay}, avec un devis gratuit et précis.
+      </p>
+
+      <ul role="list" class="channels">
+        <li>
+          <p class="channel-label">Par email</p>
+          <a class="channel-value" href={mailto}>{SITE.email}</a>
+        </li>
+        <li>
+          <p class="channel-label">Par téléphone</p>
+          <a class="channel-value" href={SITE.phoneHref}>{SITE.phone}</a>
+        </li>
+        <li>
+          <p class="channel-label">Zone d’intervention</p>
+          <p class="channel-value channel-text">{SITE.area}, et à distance partout en France</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section-tight-top" aria-labelledby="brief-title">
+    <div class="wrap split">
+      <div class="split-head">
+        <p class="ask">Pour un devis rapide</p>
+        <h2 class="h2" id="brief-title">Ce que vous pouvez me dire.</h2>
+        <p class="split-intro muted">Quelques lignes suffisent. On complète ensemble au téléphone si besoin.</p>
+        <a class="btn btn-primary" href={mailto}>Écrire ma demande</a>
+      </div>
+      <ul role="list" class="rules">
+        {brief.map((b) => (
+          <li><h3 class="h3">{b.title}</h3><p>{b.text}</p></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section-tight-top" aria-label="Offre en cours">
+    <div class="wrap"><OfferBanner /></div>
+  </section>
+
+  <section class="section section-ink" aria-labelledby="next-title">
+    <div class="wrap">
+      <p class="ask ask-on-ink">Et après ?</p>
+      <h2 class="h2" id="next-title">Ce qui se passe ensuite.</h2>
+      <ol role="list" class="next">
+        <li><span aria-hidden="true">1</span><p>Je lis votre demande et je vous réponds sous {SITE.quoteDelay}, avec des questions si besoin.</p></li>
+        <li><span aria-hidden="true">2</span><p>Je vous envoie un devis clair, basé sur les tarifs affichés, remises comprises.</p></li>
+        <li><span aria-hidden="true">3</span><p>Vous validez, on fixe le planning, et je commence.</p></li>
+      </ol>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .contact-hero { padding-block: clamp(2rem, 1rem + 3vw, 3.5rem) clamp(3.5rem, 2rem + 5vw, 6rem); }
+  .kicker { font-weight: 600; margin-bottom: 1.25rem; }
+  .title { max-width: 14ch; }
+  .intro { margin-top: 2rem; max-width: 46ch; }
+
+  .channels {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem;
+    margin-top: clamp(2.5rem, 1rem + 4vw, 4rem);
+    border-top: 2px solid var(--ink);
+  }
+  .channels li { padding-top: 1.25rem; }
+  .channel-label { color: var(--muted); font-weight: 600; }
+  .channel-value {
+    display: inline-block;
+    margin-top: 0.4rem;
+    font-size: clamp(1.375rem, 1rem + 1.4vw, 2rem);
+    font-weight: 800;
+    font-stretch: 82%;
+    line-height: 1.15;
+    overflow-wrap: anywhere;
+    text-decoration: none;
+  }
+  a.channel-value {
+    background: linear-gradient(var(--blue), var(--blue)) 0 100% / 100% 3px no-repeat;
+  }
+  a.channel-value:hover { background-size: 100% 100%; }
+  .channel-text { font-size: var(--fs-h3); font-weight: 650; }
+
+  .split-head .btn { margin-top: 0.5rem; }
+
+  .next {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(2rem, 1rem + 3vw, 4rem);
+    margin-top: clamp(2rem, 1rem + 3vw, 3.5rem);
+  }
+  .next li { border-top: 1px solid #3a3a40; padding-top: 1.5rem; }
+  .next span {
+    display: block;
+    font-size: clamp(3rem, 2rem + 3vw, 4.5rem);
+    font-weight: 800;
+    font-stretch: 78%;
+    line-height: 0.85;
+    color: var(--blue);
+    margin-bottom: 1rem;
+  }
+  .next p { color: #c9c9cf; max-width: 34ch; }
+
+  @media (max-width: 48rem) {
+    .channels,
+    .next { grid-template-columns: minmax(0, 1fr); }
+  }
+</style>

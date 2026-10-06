@@ -1,0 +1,238 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import OfferBanner from '../../components/OfferBanner.astro';
+import FaqList from '../../components/FaqList.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { METIERS_PAGES, type Metier } from '../../data/metiers';
+import { METIERS, OFFRE, SITE, formatPrice, remise } from '../../data/site';
+
+export function getStaticPaths() {
+  return METIERS_PAGES.map((m) => ({ params: { metier: m.slug }, props: { m } }));
+}
+
+interface Props { m: Metier }
+const { m } = Astro.props;
+const path = `/${m.slug}/`;
+const others = METIERS.filter((x) => x.href !== path);
+
+const schema = [
+  {
+    '@type': 'Service',
+    '@id': `${SITE.url}${path}#service`,
+    name: m.h1,
+    serviceType: 'Création de site internet et référencement local',
+    description: m.lead,
+    provider: { '@id': `${SITE.url}/#org` },
+    areaServed: [{ '@type': 'City', name: 'Vernon' }, { '@type': 'AdministrativeArea', name: 'Eure' }],
+    audience: { '@type': 'BusinessAudience', audienceType: m.label },
+    offers: {
+      '@type': 'Offer',
+      name: m.formule.label,
+      url: `${SITE.url}/tarifs/#${m.formule.id}`,
+      priceSpecification: { '@type': 'PriceSpecification', minPrice: m.formule.price, priceCurrency: 'EUR', valueAddedTaxIncluded: false },
+    },
+  },
+  {
+    '@type': 'FAQPage',
+    '@id': `${SITE.url}${path}#faq`,
+    mainEntity: m.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  },
+];
+---
+<BaseLayout
+  title={m.metaTitle}
+  description={m.metaDescription}
+  path={path}
+  breadcrumb={[{ name: 'Accueil', path: '/' }, { name: m.label, path }]}
+  schema={schema}
+>
+  <PageHero title={m.h1} kicker={m.kicker}>{m.lead}</PageHero>
+
+  <div class="wrap">
+    <Image
+      src={m.image}
+      alt={m.imageAlt}
+      width={1600}
+      widths={[640, 1024, 1600]}
+      sizes="(max-width: 82rem) 100vw, 82rem"
+      loading="eager"
+      fetchpriority="high"
+      class="banner"
+    />
+  </div>
+
+  <!-- Intro -->
+  <section class="section" aria-labelledby="intro-title">
+    <div class="wrap split">
+      <div class="split-head">
+        <p class="ask">{m.introAsk}</p>
+        <h2 class="h2" id="intro-title">{m.introTitle}</h2>
+      </div>
+      <div class="prose intro">
+        {m.intro.map((p) => <p>{p}</p>)}
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section class="section section-ink" aria-labelledby="services-title">
+    <div class="wrap">
+      <p class="ask ask-on-ink">Ce que je fais pour vous</p>
+      <h2 class="h2" id="services-title">Site, Google, publicité : tout au même endroit.</h2>
+      <ol role="list" class:list={['services', { 'services-4': m.services.length === 4 }]}>
+        {m.services.map((s, i) => (
+          <li class="service">
+            <span class="service-num" aria-hidden="true">{i + 1}</span>
+            <h3 class="h3">{s.title}</h3>
+            <ul role="list" class="dots">
+              {s.items.map((item) => <li>{item}</li>)}
+            </ul>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- Types + formule -->
+  <section class="section" aria-labelledby="types-title">
+    <div class="wrap duo">
+      <div>
+        <p class="ask">Pour qui ?</p>
+        <h2 class="h2" id="types-title">{m.typesTitle}.</h2>
+        <ul role="list" class="rules types">
+          {m.types.map((t) => <li>{t}</li>)}
+        </ul>
+      </div>
+      <div class="pick">
+        <p class="pick-label">La formule que je conseille</p>
+        <p class="pick-name">{m.formule.label}</p>
+        <p class="pick-price">
+          dès {formatPrice(m.formule.price)}
+          <span>{formatPrice(remise(m.formule.price))} avec l’offre -{OFFRE.remise}&nbsp;%</span>
+        </p>
+        <p class="pick-why">{m.formule.why}</p>
+        <a class="link" href={`/tarifs/#${m.formule.id}`}>Voir le détail de la formule</a>
+      </div>
+    </div>
+    <div class="wrap offer-row"><OfferBanner /></div>
+  </section>
+
+  <!-- Méthode courte -->
+  <section class="section section-wash" aria-labelledby="simple-title">
+    <div class="wrap split">
+      <div class="split-head">
+        <p class="ask">Et concrètement ?</p>
+        <h2 class="h2" id="simple-title">Un accompagnement simple.</h2>
+      </div>
+      <ul role="list" class="rules">
+        <li><h3 class="h3">Vous restez sur votre métier</h3><p>Je m’occupe du site, de Google et du suivi. Vous validez, je fais.</p></li>
+        <li><h3 class="h3">Un seul interlocuteur</h3><p>Pas de chef de projet ni de commercial : vous parlez directement à la personne qui construit votre site.</p></li>
+        <li><h3 class="h3">Des mots simples</h3><p>Une stratégie claire et compréhensible, des bilans sans jargon.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section" aria-labelledby="faq-title">
+    <div class="wrap split">
+      <div class="split-head">
+        <p class="ask">Vous vous demandez sûrement…</p>
+        <h2 class="h2" id="faq-title">Questions fréquentes</h2>
+        <a class="link" href="/faq-seo-vernon/">Toutes les questions sur le SEO à Vernon</a>
+      </div>
+      <FaqList items={m.faq} />
+    </div>
+  </section>
+
+  <!-- Autres métiers -->
+  <nav class="section section-tight-top" aria-labelledby="others-title">
+    <div class="wrap">
+      <p class="ask" id="others-title">Vous n’êtes pas {m.label.toLowerCase()} ?</p>
+      <ul role="list" class="others">
+        {others.map((o) => <li><a href={o.href}>{o.label}</a></li>)}
+      </ul>
+    </div>
+  </nav>
+
+  <CtaBand />
+</BaseLayout>
+
+<style>
+  .banner {
+    width: 100%;
+    aspect-ratio: 21 / 9;
+    object-fit: cover;
+    border-radius: var(--radius);
+  }
+  .intro { font-size: var(--fs-lead); line-height: 1.55; }
+
+  .services {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(2rem, 1rem + 3vw, 3.5rem);
+    margin-top: clamp(2.5rem, 1rem + 4vw, 4rem);
+  }
+  .services-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .service { border-top: 1px solid #3a3a40; padding-top: 1.5rem; }
+  .service-num {
+    display: block;
+    font-size: clamp(3rem, 2rem + 3vw, 4.5rem);
+    font-weight: 800;
+    font-stretch: 78%;
+    line-height: 0.85;
+    color: var(--blue);
+    margin-bottom: 1rem;
+  }
+  .service .dots { margin-top: 1rem; color: #c9c9cf; }
+
+  .duo {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: clamp(2.5rem, 1rem + 5vw, 6rem);
+    align-items: start;
+  }
+  .types { margin-top: 2rem; }
+  .types li { font-size: var(--fs-h3); font-weight: 650; padding-block: 1.1rem; }
+
+  .pick {
+    padding: clamp(1.5rem, 1rem + 1.5vw, 2.25rem);
+    border: 2px solid var(--ink);
+    border-radius: var(--radius);
+  }
+  .pick-label { color: var(--muted); font-weight: 600; }
+  .pick-name {
+    margin-top: 0.5rem;
+    font-size: clamp(2rem, 1.5rem + 2vw, 3rem);
+    font-weight: 800;
+    font-stretch: 78%;
+    font-variation-settings: 'opsz' 96;
+    line-height: 1;
+  }
+  .pick-price { margin-top: 0.75rem; font-size: var(--fs-h3); font-weight: 800; }
+  .pick-price span { display: block; font-size: 1rem; font-weight: 650; color: var(--blue-ink); }
+  .pick-why { margin-block: 1rem; color: var(--muted); }
+
+  .offer-row { margin-top: clamp(2.5rem, 1rem + 4vw, 4rem); }
+
+  .others { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+  .others a {
+    display: inline-block;
+    padding: 0.7rem 1.3rem;
+    border: 2px solid var(--ink);
+    border-radius: 999px;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .others a:hover { background: var(--ink); color: var(--paper); }
+
+  @media (max-width: 64rem) {
+    .duo { grid-template-columns: minmax(0, 1fr); }
+  }
+  @media (max-width: 48rem) {
+    .services,
+    .services-4 { grid-template-columns: minmax(0, 1fr); }
+    .banner { aspect-ratio: 4 / 3; }
+  }
+</style>

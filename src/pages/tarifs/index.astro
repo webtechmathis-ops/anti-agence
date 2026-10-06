@@ -1,0 +1,189 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import PriceCard from '../../components/PriceCard.astro';
+import OfferBanner from '../../components/OfferBanner.astro';
+import FaqList from '../../components/FaqList.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { LEGAL, OFFRE, SITE, formatPrice, offreFin, remise } from '../../data/site';
+import { FAQ_TARIFS, OPTIONS, PACKAGES, SEO, SITES } from '../../data/tarifs';
+
+const all = [...SITES, ...PACKAGES, ...SEO];
+const schema = [
+  {
+    '@type': 'OfferCatalog',
+    '@id': `${SITE.url}/tarifs/#catalogue`,
+    name: 'Tarifs Anti-Agence : création de site internet, SEO et publicité',
+    itemListElement: all.map((f) => ({
+      '@type': 'Offer',
+      name: f.name,
+      description: f.pitch,
+      url: `${SITE.url}/tarifs/#${f.id}`,
+      priceSpecification: { '@type': 'PriceSpecification', minPrice: f.price, priceCurrency: 'EUR', valueAddedTaxIncluded: false },
+      seller: { '@id': `${SITE.url}/#org` },
+      areaServed: 'Vernon, Eure',
+    })),
+  },
+  {
+    '@type': 'FAQPage',
+    '@id': `${SITE.url}/tarifs/#faq`,
+    mainEntity: FAQ_TARIFS.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  },
+];
+---
+<BaseLayout
+  title="Tarifs site internet et SEO à Vernon | Anti-Agence"
+  description="Prix affichés : site One-page dès 840 €, vitrine 1 à 5 pages dès 1 240 €, e-commerce dès 2 540 €, audit SEO dès 240 €. -10 % en ce moment."
+  path="/tarifs/"
+  breadcrumb={[{ name: 'Accueil', path: '/' }, { name: 'Tarifs', path: '/tarifs/' }]}
+  schema={schema}
+>
+  <PageHero title="Tarifs création de site internet et SEO à Vernon" kicker="Des prix affichés avant de signer" secondary={{ label: 'Voir les formules', href: '#sites' }}>
+    Un site internet coûte de {formatPrice(840)} (One-page) à {formatPrice(2540)} (boutique en ligne), et un audit SEO
+    démarre à {formatPrice(240)}. Ce sont des prix de départ : le devis précis arrive sous {SITE.quoteDelay}.
+    En ce moment, toutes les prestations sont à -{OFFRE.remise}&nbsp;%.
+  </PageHero>
+
+  <!-- Offre -->
+  <section class="section section-tight-top" id="offre" aria-labelledby="offre-title">
+    <div class="wrap offer-grid">
+      <div>
+        <p class="ask">Une remise, et une autre si on vous a recommandé</p>
+        <h2 class="h2" id="offre-title">L’offre en cours.</h2>
+      </div>
+      <div>
+        <OfferBanner link={false} />
+        <ul role="list" class="dots offer-terms">
+          <li><strong>-{OFFRE.remise}&nbsp;% sur toutes les prestations</strong> (sites, packages, SEO, publicité et options), calculés sur les prix affichés, pour tout devis signé jusqu’au {offreFin}.</li>
+          <li><strong>Parrainage :</strong> si un client vous a recommandé, vous bénéficiez de {OFFRE.parrainage}&nbsp;% supplémentaires, soit -{OFFRE.remise + OFFRE.parrainage}&nbsp;% au total pendant l’offre.</li>
+          <li>Votre <strong>parrain</strong> bénéficie de -{OFFRE.parrainage}&nbsp;% sur sa prochaine prestation.</li>
+          <li>Indiquez le nom de votre parrain dans votre demande de devis.</li>
+          <li>Prix nets : {LEGAL.vat}.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sites -->
+  <section class="section section-tight-top" id="sites" aria-labelledby="sites-title">
+    <div class="wrap">
+      <p class="ask">Quel site vous faut-il ?</p>
+      <h2 class="h2 block-title" id="sites-title">Les sites internet.</h2>
+      <p class="block-intro muted">
+        Votre site, c’est votre vitrine dans une rue très fréquentée : il doit être clair et donner envie d’entrer.
+        Tous les sites sont responsives, sécurisés (SSL) et pensés pour le référencement dès la mise en ligne.
+      </p>
+      <div class="cards cards-4">
+        {SITES.map((f) => <PriceCard formule={f} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- Packages -->
+  <section class="section section-wash" aria-labelledby="packages-title">
+    <div class="wrap">
+      <p class="ask">Besoin de réservations en ligne ?</p>
+      <h2 class="h2 block-title" id="packages-title">Les packages tout compris.</h2>
+      <p class="block-intro muted">
+        Deux formules pour les restaurants, hôtels, spas, salons et tous ceux qui prennent des rendez-vous :
+        l’Essentiel pour poser des bases solides, l’Avancé pour un site plus complet et mieux référencé.
+      </p>
+      <div class="cards cards-2">
+        {PACKAGES.map((f) => <PriceCard formule={f} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- Options -->
+  <section class="section" aria-labelledby="options-title">
+    <div class="wrap split">
+      <div class="split-head">
+        <p class="ask">Et en plus ?</p>
+        <h2 class="h2" id="options-title">Les options.</h2>
+        <p class="split-intro muted">À ajouter à n’importe quel site. La remise de -{OFFRE.remise}&nbsp;% s’applique aussi.</p>
+      </div>
+      <ul role="list" class="rules options">
+        {OPTIONS.map((o) => (
+          <li>
+            <div class="option-head">
+              <h3 class="h3">{o.name}</h3>
+              <p class="option-price">{'from' in o && o.from ? 'dès ' : ''}{formatPrice(o.price)}{'unit' in o ? o.unit : ''}</p>
+            </div>
+            <p>{o.text}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- SEO -->
+  <section class="section section-ink" id="seo" aria-labelledby="seo-title">
+    <div class="wrap">
+      <p class="ask ask-on-ink">Votre site est beau, mais personne ne le trouve ?</p>
+      <h2 class="h2 block-title" id="seo-title">Référencement et publicité.</h2>
+      <p class="block-intro seo-intro">
+        Un audit pour savoir où vous en êtes, le SEO pour vous placer sur la carte, la publicité pour être visible tout de suite.
+        L’objectif : que vos clients vous trouvent avant vos concurrents.
+      </p>
+      <div class="cards cards-4 cards-on-ink">
+        {SEO.map((f) => <PriceCard formule={f} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section" aria-labelledby="faq-title">
+    <div class="wrap split">
+      <div class="split-head">
+        <p class="ask">Vous hésitez entre deux formules ?</p>
+        <h2 class="h2" id="faq-title">Questions sur les tarifs</h2>
+        <a class="link" href="/faq-seo-vernon/">Toutes les questions fréquentes</a>
+      </div>
+      <FaqList items={FAQ_TARIFS} />
+    </div>
+  </section>
+
+  <CtaBand title="Un devis en 24 h ?" text={`Décrivez votre projet en quelques lignes, je vous réponds sous ${SITE.quoteDelay} avec un prix précis, remise de -${OFFRE.remise} % incluse.`} />
+</BaseLayout>
+
+<style>
+  .offer-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: clamp(2rem, 1rem + 4vw, 5rem);
+    align-items: start;
+  }
+  .offer-terms { margin-top: 1.5rem; }
+
+  .block-title { max-width: 18ch; }
+  .block-intro { max-width: 60ch; margin-top: 1.25rem; }
+  .seo-intro { color: #c9c9cf; }
+
+  .cards {
+    display: grid;
+    gap: 1.25rem;
+    margin-top: clamp(2rem, 1rem + 3vw, 3rem);
+    align-items: stretch;
+  }
+  .cards-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .cards-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 56rem; }
+  .cards-on-ink { color: var(--ink); }
+
+  .option-head { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
+  .option-price {
+    flex-shrink: 0;
+    font-size: var(--fs-h3);
+    font-weight: 800;
+    font-stretch: 82%;
+    font-variant-numeric: tabular-nums;
+  }
+
+  @media (max-width: 72rem) {
+    .cards-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 48rem) {
+    .offer-grid { grid-template-columns: minmax(0, 1fr); }
+    .cards-4,
+    .cards-2 { grid-template-columns: minmax(0, 1fr); }
+  }
+</style>
