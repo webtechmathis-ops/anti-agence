@@ -1,0 +1,38 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { METIERS, SITE } from '../data/site';
+---
+<BaseLayout
+  title="Page introuvable | Anti-Agence"
+  description="Cette page n’existe pas ou a été déplacée. Retrouvez les tarifs, les métiers accompagnés ou contactez Mathis Bricourt, freelance à Vernon."
+  path="/404/"
+  noindex
+>
+  <section class="wrap notfound">
+    <p class="code" aria-hidden="true">404</p>
+    <h1 class="display-sm">Cette page n’existe pas (ou plus).</h1>
+    <p class="lead">L’ancien site a été refait : certaines adresses ont changé. Voici où trouver ce que vous cherchiez.</p>
+    <ul role="list" class="links">
+      <li><a class="btn btn-primary" href="/">Accueil</a></li>
+      <li><a class="btn btn-ghost" href="/tarifs/">Tarifs</a></li>
+      {METIERS.map((m) => <li><a class="btn btn-ghost" href={m.href}>{m.label}</a></li>)}
+      <li><a class="btn btn-ghost" href={SITE.ctaHref}>Contact</a></li>
+    </ul>
+  </section>
+</BaseLayout>
+
+<style>
+  .notfound { padding-block: clamp(3rem, 2rem + 4vw, 6rem) var(--section); }
+  .code {
+    font-size: clamp(6rem, 3rem + 14vw, 16rem);
+    font-weight: 800;
+    font-stretch: 75%;
+    line-height: 0.8;
+    color: var(--blue);
+    -webkit-text-stroke: 3px var(--ink);
+    paint-order: stroke fill;
+    margin-bottom: 1.5rem;
+  }
+  .lead { margin-top: 1.5rem; max-width: 46ch; }
+  .links { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2.5rem; }
+</style>

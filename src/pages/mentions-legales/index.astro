@@ -1,0 +1,98 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { LEGAL, SITE } from '../../data/site';
+---
+<BaseLayout
+  title="Mentions légales et confidentialité | Anti-Agence"
+  description="Mentions légales du site anti-agence-web.fr : éditeur, hébergeur, propriété intellectuelle, données personnelles et cookies."
+  path="/mentions-legales/"
+  breadcrumb={[{ name: 'Accueil', path: '/' }, { name: 'Mentions légales', path: '/mentions-legales/' }]}
+>
+  <div class="wrap legal">
+    <h1 class="display-sm legal-title">Mentions légales</h1>
+    <p class="lead legal-intro">
+      Conformément à la loi n° 2004-575 du 21 juin 2004 pour la confiance dans l’économie numérique (LCEN), voici les
+      informations sur l’éditeur et l’hébergeur du site {SITE.url.replace('https://', '')}.
+    </p>
+
+    <div class="article legal-body">
+      <h2 id="editeur">Éditeur du site</h2>
+      <dl class="facts">
+        <dt>Nom</dt><dd>{SITE.owner}</dd>
+        <dt>Nom commercial</dt><dd>{SITE.name}</dd>
+        <dt>Statut</dt><dd>{LEGAL.status}</dd>
+        <dt>SIRET</dt><dd>{LEGAL.siret}</dd>
+        <dt>Adresse</dt><dd>{LEGAL.address}</dd>
+        <dt>Téléphone</dt><dd><a href={SITE.phoneHref}>{SITE.phone}</a></dd>
+        <dt>Email</dt><dd><a href={`mailto:${SITE.email}`}>{SITE.email}</a></dd>
+        <dt>TVA</dt><dd>{LEGAL.vat}</dd>
+        <dt>Directeur de la publication</dt><dd>{SITE.owner}</dd>
+      </dl>
+
+      <h2 id="hebergeur">Hébergeur</h2>
+      <p>{LEGAL.host}</p>
+
+      <h2 id="propriete">Propriété intellectuelle</h2>
+      <p>
+        Les textes, la structure, le logo et les éléments graphiques du site sont la propriété de {SITE.owner}, sauf
+        mention contraire. Toute reproduction, représentation ou diffusion, totale ou partielle, sans autorisation écrite
+        préalable est interdite.
+      </p>
+      <p>
+        La police de caractères Bricolage Grotesque est utilisée sous licence SIL Open Font License.
+      </p>
+
+      <h2 id="donnees">Données personnelles</h2>
+      <p>
+        Le site ne comporte ni formulaire, ni compte utilisateur, ni outil de mesure d’audience. Les seules données
+        personnelles traitées sont celles que vous transmettez volontairement par email ou par téléphone.
+      </p>
+      <ul>
+        <li><strong>Responsable du traitement :</strong> {SITE.owner}, {LEGAL.address}.</li>
+        <li><strong>Finalité :</strong> répondre à vos demandes et établir des devis.</li>
+        <li><strong>Base légale :</strong> mesures précontractuelles prises à votre demande, puis exécution du contrat.</li>
+        <li><strong>Durée de conservation :</strong> 3 ans après le dernier contact pour un prospect, et durée légale de conservation des pièces comptables pour un client.</li>
+        <li><strong>Destinataires :</strong> vos données ne sont ni vendues ni cédées. Elles transitent par la messagerie utilisée pour vous répondre.</li>
+      </ul>
+      <p>
+        Conformément au RGPD, vous disposez d’un droit d’accès, de rectification, d’effacement, de limitation et
+        d’opposition. Pour les exercer, écrivez à <a href={`mailto:${SITE.email}`}>{SITE.email}</a>. Vous pouvez aussi
+        adresser une réclamation à la CNIL (<a href="https://www.cnil.fr" rel="noopener">cnil.fr</a>).
+      </p>
+      <p>
+        Comme tout hébergeur, Netlify enregistre des journaux techniques (adresse IP, date, page demandée) nécessaires à la
+        sécurité et au bon fonctionnement du site.
+      </p>
+
+      <h2 id="cookies">Cookies</h2>
+      <p>
+        Le site n’utilise aucun cookie publicitaire ni de mesure d’audience, et ne dépose aucun cookie nécessitant votre
+        consentement.
+      </p>
+
+      <h2 id="responsabilite">Responsabilité</h2>
+      <p>
+        Les informations du site sont données à titre indicatif et peuvent évoluer. Les tarifs affichés sont des prix de
+        départ ; seul le devis signé fait foi. Les liens vers d’autres sites n’engagent pas la responsabilité de l’éditeur.
+      </p>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .legal { padding-block: clamp(2rem, 1rem + 3vw, 3.5rem) var(--section); }
+  .legal-title { max-width: 14ch; }
+  .legal-intro { margin-top: 1.75rem; max-width: 52ch; }
+  .legal-body { max-width: 46rem; margin-top: clamp(2rem, 1rem + 3vw, 3rem); }
+  .facts {
+    display: grid;
+    grid-template-columns: minmax(0, 14rem) minmax(0, 1fr);
+    border-top: 2px solid var(--ink);
+  }
+  .facts dt, .facts dd { margin: 0; padding: 0.8rem 1rem 0.8rem 0; border-bottom: 1px solid var(--line); }
+  .facts dt { color: var(--muted); font-weight: 600; font-size: 1rem; }
+  @media (max-width: 40rem) {
+    .facts { grid-template-columns: minmax(0, 1fr); }
+    .facts dt { border-bottom: 0; padding-bottom: 0; }
+  }
+</style>
