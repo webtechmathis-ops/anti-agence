@@ -1,5 +1,6 @@
 // Tarifs : seule source de prix du site (copie de l'ancienne page /tarifs/, prix « à partir de »).
 // Les pages métier, la FAQ, le JSON-LD et l'accueil lisent ce fichier.
+import { OFFRE, offreFin } from './site';
 
 export interface Formule {
   id: string;
@@ -187,6 +188,6 @@ export const FAQ_TARIFS = [
   },
   {
     q: 'Comment fonctionnent la remise et le parrainage ?',
-    a: 'La remise de bienvenue s’applique à toutes les prestations pendant la durée de l’offre. Si un client vous a recommandé, vous bénéficiez d’une remise supplémentaire, et votre parrain profite d’une remise sur sa prochaine prestation. Les conditions exactes sont détaillées sur cette page.',
+    a: `La remise de ${OFFRE.remise} % s’applique à toutes les prestations jusqu’au ${offreFin}. Le parrainage, lui, est permanent : si un client vous a recommandé, vous avez ${OFFRE.parrainage} % de remise (cumulables avec l’offre en cours), et votre parrain a ${OFFRE.parrainage} % sur sa prochaine prestation.`,
   },
 ] as const;

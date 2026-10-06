@@ -15,6 +15,7 @@ const year = new Date().getFullYear();
         <a href={SITE.phoneHref}>{SITE.phone}</a><br />
         {SITE.area}
       </address>
+      <p class="footer-pro">{SITE.audience}.</p>
     </div>
 
     <nav aria-label="Pages du site">
@@ -55,6 +56,7 @@ const year = new Date().getFullYear();
   .footer-logo { width: 140px; height: auto; filter: brightness(0) invert(1); margin-bottom: 1.5rem; }
   .footer-id p { max-width: 34ch; color: #c9c9cf; }
   address { font-style: normal; margin-top: 1.25rem; line-height: 1.9; }
+  .footer-id .footer-pro { margin-top: 1rem; font-size: var(--fs-small); }
   .footer-title { font-weight: 700; color: var(--blue); margin-bottom: 0.75rem; }
   .footer li + li { margin-top: 0.4rem; }
   .footer-bottom {

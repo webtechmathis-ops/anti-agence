@@ -34,10 +34,10 @@ Objectifs : être trouvé sur "création site internet Vernon", "SEO Vernon", "f
 - `netlify.toml` : build, cache long sur `/_astro/*` et `/fonts/*`, en-têtes de sécurité.
 - **Ancien export WordPress/Divi déplacé dans `legacy/`** : source de contenu uniquement, ni servi ni buildé. À supprimer du repo une fois toutes les pages migrées.
 - `wp-content/` et `wp-includes/` retirés de l'index git (l'export complet reste dans `../anti-agence.zip`, 187 Mo). Images utiles extraites, renommées sans "vannes", dans `src/assets/`.
-- Commits locaux sur `main`, rien de poussé.
+- Branche `refonte-astro` poussée sur GitHub (webtechmathis-ops/anti-agence). Le `main` distant contient l'ancien site.
 - Logo : `src/assets/brand/logo-anti-agence.png` (lettrage "ANTI AGENCE" bleu `#5271ff`, rogné). Favicon redessiné en SVG (`public/favicon.svg`, 2 quarts de cercle + 2 pastilles), `apple-touch-icon.png`, `og-default.jpg` (1200x630).
 - npm : le cache `~/.npm` a des fichiers root, installer avec `npm install --cache <dossier temporaire>` ou corriger les droits (`sudo chown -R $(whoami) ~/.npm`).
-- Baseline de l'ancien site (2026-10-06) : 12 pages, 234 erreurs, 18 alertes. Nouveau build : 12 pages, 0 alerte, 7 erreurs = uniquement le marqueur `A CONFIRMER` de la date de fin de l'offre (voulu, bloque la mise en ligne tant qu'elle n'est pas validée).
+- Baseline de l'ancien site (2026-10-06) : 12 pages, 234 erreurs, 18 alertes. Nouveau build : 12 pages, 0 erreur, 0 alerte.
 
 ## 4. Faits sources (seule base autorisée)
 
@@ -79,7 +79,8 @@ Inclus site One-page : design responsive, SSL, formulaire de contact, intégrati
 ### Offres commerciales (décision de Mathis le 2026-10-06)
 - -10 % sur toutes les prestations, durée limitée.
 - Parrainage : le filleul a 10 % supplémentaires (cumul -20 % pendant l'offre), le parrain a -10 % sur sa prochaine prestation.
-- Réglages dans `src/data/site.ts` (`OFFRE`). Date de fin non fournie : `2026-12-31` proposé, `finConfirmee: false` tant que Mathis n'a pas validé.
+- Date de fin validée : 31 décembre 2026. Parrainage **permanent** (validé le 2026-10-06), cumulable avec l'offre. Réglages dans `src/data/site.ts` (`OFFRE`).
+- Clientèle : **uniquement des professionnels** (pas de médiateur de la consommation requis). Mentionné dans le footer, les tarifs et les mentions légales.
 
 ### Services présentés (accueil)
 Référencement naturel SEO & GEO, campagnes Google Ads, création de site, netlinking, accompagnement global, bilan de performances. Méthode en 3 étapes : écoute et stratégie locale, site optimisé, référencement et suivi continu.
@@ -177,17 +178,16 @@ Utilisateur et plugins (déjà installés) :
 
 ## 10. Décisions
 
-Prises le 2026-10-06 : stack Astro, hébergement Netlify, accent bleu `#5271ff`, retrait des allégations non prouvées, passage au "je", design de l'accueil validé, tarifs alignés partout sur la page tarifs, offre -10 % + parrainage, statut micro-entrepreneur, TVA non applicable, adresse publiée dans les mentions légales.
+Prises le 2026-10-06 : fin d'offre au 31/12/2026, parrainage permanent, clients uniquement professionnels, stack Astro, hébergement Netlify, accent bleu `#5271ff`, retrait des allégations non prouvées, passage au "je", design de l'accueil validé, tarifs alignés partout sur la page tarifs, offre -10 % + parrainage, statut micro-entrepreneur, TVA non applicable, adresse publiée dans les mentions légales.
 
 Encore ouvertes (demander à Mathis) :
-1. **Date de fin de l'offre -10 %** (bloquant pour la mise en ligne, voir `OFFRE.fin`).
-2. Le parrainage continue-t-il après la fin de l'offre ? Le parrain a-t-il un délai pour utiliser sa remise ?
-3. Clients particuliers (B2C) : si oui, désigner un médiateur de la consommation (obligatoire) et l'ajouter aux mentions légales. Des CGV seraient aussi utiles.
-4. Formulaire de contact (Netlify Forms + anti-spam ?) ou email seul ; prise de RDV (le site avait Simply Schedule Appointments).
-5. Mesure d'audience : aucune pour l'instant (mentions légales rédigées en ce sens). Si ajout, passer par une solution exemptée de consentement CNIL ou un bandeau.
-6. Robots.txt : autoriser ou non les crawlers IA d'entraînement (GPTBot, ClaudeBot, Google-Extended). Les crawlers de recherche IA (OAI-SearchBot, PerplexityBot) sont à autoriser pour le GEO. Actuellement tout est autorisé.
-7. Projets réels à montrer en réalisations (avec accord des clients), et page `/a-propos/` avec photo de Mathis.
-8. Création du site Netlify, preview, puis bascule DNS depuis Hostinger.
+1. Délai pour que le parrain utilise sa remise (rien n'est affiché pour l'instant). Des CGV pour professionnels seraient utiles.
+2. Après le 31/12/2026 : le site est statique, l'offre reste affichée tant qu'il n'est pas reconstruit. Prévoir de la retirer ou de la prolonger avant cette date (modifier `OFFRE`, puis rebuild).
+3. Formulaire de contact (Netlify Forms + anti-spam ?) ou email seul ; prise de RDV (le site avait Simply Schedule Appointments).
+4. Mesure d'audience : aucune pour l'instant (mentions légales rédigées en ce sens). Si ajout, passer par une solution exemptée de consentement CNIL ou un bandeau.
+5. Robots.txt : autoriser ou non les crawlers IA d'entraînement (GPTBot, ClaudeBot, Google-Extended). Les crawlers de recherche IA (OAI-SearchBot, PerplexityBot) sont à autoriser pour le GEO. Actuellement tout est autorisé.
+6. Projets réels à montrer en réalisations (avec accord des clients), et page `/a-propos/` avec photo de Mathis.
+7. Création du site Netlify, preview, puis bascule DNS depuis Hostinger.
 
 ## 11. Méthode
 

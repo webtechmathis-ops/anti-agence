@@ -10,6 +10,7 @@ export const SITE = {
   phoneHref: 'tel:+33770178933',
   city: 'Vernon',
   area: 'Vernon et l’Eure (27), Normandie',
+  audience: 'Prestations réservées aux professionnels',
   quoteDelay: '24 h',
   ctaLabel: 'Rencontrons-nous !',
   ctaHref: '/contact-et-devis/',
@@ -27,9 +28,9 @@ export const LEGAL = {
 // Offres commerciales (décision de Mathis le 2026-10-06).
 export const OFFRE = {
   remise: 10, // % sur toutes les prestations, durée limitée
-  parrainage: 10, // % supplémentaires pour le filleul, et % offerts au parrain sur sa prochaine prestation
-  fin: '2026-12-31', // date de fin proposée, non fournie par Mathis
-  finConfirmee: false, // passer à true une fois la date validée (sinon le preflight bloque)
+  parrainage: 10, // permanent : % supplémentaires pour le filleul, et % offerts au parrain sur sa prochaine prestation
+  fin: '2026-12-31', // validée par Mathis le 2026-10-06
+  finConfirmee: true, // false = marqueur A CONFIRMER dans le HTML (bloque le preflight)
 } as const;
 
 export const offreFin = new Date(`${OFFRE.fin}T23:59:59`).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });

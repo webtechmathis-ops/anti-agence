@@ -55,10 +55,10 @@ const schema = [
         <OfferBanner link={false} />
         <ul role="list" class="dots offer-terms">
           <li><strong>-{OFFRE.remise}&nbsp;% sur toutes les prestations</strong> (sites, packages, SEO, publicité et options), calculés sur les prix affichés, pour tout devis signé jusqu’au {offreFin}.</li>
-          <li><strong>Parrainage :</strong> si un client vous a recommandé, vous bénéficiez de {OFFRE.parrainage}&nbsp;% supplémentaires, soit -{OFFRE.remise + OFFRE.parrainage}&nbsp;% au total pendant l’offre.</li>
+          <li><strong>Parrainage, sans date de fin :</strong> si un client vous a recommandé, vous bénéficiez de -{OFFRE.parrainage}&nbsp;%, cumulables avec l’offre en cours, soit -{OFFRE.remise + OFFRE.parrainage}&nbsp;% au total jusqu’au {offreFin}.</li>
           <li>Votre <strong>parrain</strong> bénéficie de -{OFFRE.parrainage}&nbsp;% sur sa prochaine prestation.</li>
           <li>Indiquez le nom de votre parrain dans votre demande de devis.</li>
-          <li>Prix nets : {LEGAL.vat}.</li>
+          <li>Prix nets : {LEGAL.vat}. Prestations réservées aux professionnels.</li>
         </ul>
       </div>
     </div>
