@@ -32,6 +32,7 @@ export const FAQ_GROUPS = [
       {
         q: 'Comment apparaître dans Google Maps à Vernon ?',
         a: 'Pour entrer dans le « pack local » (les 3 résultats affichés sur la carte) : 1. créer et compléter une fiche Google Business Profile (adresse, catégories précises, photos, horaires) ; 2. utiliser des mots-clés locaux dans la description ; 3. collecter des avis clients et répondre à chacun ; 4. publier régulièrement des posts sur la fiche.',
+        more: { href: '/blog/fiche-google-business-profile-artisan/', label: 'Le guide de la fiche Google' },
       },
       {
         q: 'Combien de temps faut-il pour être visible sur Google ?',
@@ -44,6 +45,7 @@ export const FAQ_GROUPS = [
       {
         q: 'Comment obtenir des avis Google ?',
         a: 'Le plus efficace : demander à chaque client satisfait, en lui envoyant le lien direct vers votre fiche. Ajoutez ce lien dans vos emails, sur vos factures ou via un QR code en boutique. Chaque nouvel avis renforce votre place dans le pack local.',
+        more: { href: '/blog/avis-google-restaurant/', label: 'Le guide complet des avis Google' },
       },
       {
         q: 'Un artisan ou un commerçant a-t-il vraiment besoin d’un site ?',
@@ -58,6 +60,7 @@ export const FAQ_GROUPS = [
       {
         q: 'Qu’est-ce que le GEO et est-ce utile pour une entreprise à Vernon ?',
         a: 'Le GEO (Generative Engine Optimization) consiste à optimiser ses contenus pour apparaître dans les réponses des IA comme ChatGPT, Perplexity ou Google AI Overviews. Il complète le SEO : quand un client demande à une IA « quelle agence web à Vernon ? », l’objectif est que votre entreprise soit citée.',
+        more: { href: '/blog/apparaitre-dans-chatgpt-entreprise-locale/', label: 'Apparaître dans ChatGPT : la méthode' },
       },
       {
         q: 'Le GEO remplace-t-il le SEO ?',

@@ -130,7 +130,11 @@ const schema = [
       <ul role="list" class="geo-list">
         {geo.map((g) => <li><h3 class="h3">{g.title}</h3><p>{g.text}</p></li>)}
       </ul>
-      <a class="link link-on-ink" href="/geo-definition-seo/">Lire le guide complet du GEO</a>
+      <p class="geo-links">
+        <a class="link link-on-ink" href="/geo-definition-seo/">Lire le guide complet du GEO</a>
+        <a class="link link-on-ink" href="/blog/apparaitre-dans-chatgpt-entreprise-locale/">Apparaître dans ChatGPT quand on est une entreprise locale</a>
+        <a class="link link-on-ink" href="/blog/refonte-site-sans-perdre-referencement/">Refaire son site sans perdre son référencement</a>
+      </p>
     </div>
   </section>
 
@@ -170,6 +174,7 @@ const schema = [
   .geo-list li { border-top: 3px solid var(--blue); padding-top: 1.25rem; }
   .geo-list p { margin-top: 0.5rem; color: #c9c9cf; }
   .link-on-ink { color: #a9b8ff; }
+  .geo-links { display: flex; flex-direction: column; gap: 0.6rem; align-items: flex-start; }
 
   @media (max-width: 64rem) {
     .geo-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }

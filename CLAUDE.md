@@ -34,6 +34,7 @@ Objectifs : être trouvé sur "création site internet Vernon", "SEO Vernon", "f
 - `netlify.toml` : build, cache long sur `/_astro/*` et `/fonts/*`, en-têtes de sécurité.
 - **Ancien export WordPress/Divi déplacé dans `legacy/`** : source de contenu uniquement, ni servi ni buildé. À supprimer du repo une fois toutes les pages migrées.
 - `wp-content/` et `wp-includes/` retirés de l'index git (l'export complet reste dans `../anti-agence.zip`, 187 Mo). Images utiles extraites, renommées sans "vannes", dans `src/assets/`.
+- Fichier de validation Google Search Console : `public/google54c688cfa25bc6ac.html` (servi à la racine). Après déploiement, vérifier qu'il répond en 200 sans redirection.
 - Branche `refonte-astro` poussée sur GitHub (webtechmathis-ops/anti-agence). Le `main` distant contient l'ancien site.
 - Logo : `src/assets/brand/logo-anti-agence.png` (lettrage "ANTI AGENCE" bleu `#5271ff`, rogné). Favicon redessiné en SVG (`public/favicon.svg`, 2 quarts de cercle + 2 pastilles), `apple-touch-icon.png`, `og-default.jpg` (1200x630).
 - npm : le cache `~/.npm` a des fichiers root, installer avec `npm install --cache <dossier temporaire>` ou corriger les droits (`sudo chown -R $(whoami) ~/.npm`).
@@ -117,6 +118,31 @@ URLs existantes (à conserver) :
 | `/contact-et-devis/` | Conversion | devis site internet |
 | `/mentions-legales/` | Légal | aucune |
 
+### Blog (`/blog/`, ajouté le 2026-10-06) : carte anti-cannibalisation
+
+Chaque article vise une intention **informationnelle** distincte et renvoie vers UNE page business (champ `money`). Aucun article ne vise la requête principale d'une page business. Avant d'ajouter un article, vérifier qu'il ne recoupe aucune ligne de ce tableau.
+
+| URL | Intention visée | Page business soutenue |
+|---|---|---|
+| `/blog/fiche-google-business-profile-artisan/` | fiche google business profile artisan | `/artisans/` |
+| `/blog/referencement-plusieurs-villes/` | référencement plusieurs villes, pages locales | `/artisans/` |
+| `/blog/click-and-collect-petit-commerce/` | click and collect petit commerce | `/commercants/` |
+| `/blog/avis-google-restaurant/` | avis google restaurant | `/restaurateurs-traiteurs/` |
+| `/blog/reservation-en-ligne-restaurant/` | solution de réservation en ligne restaurant | `/tarifs/#package-essentiel` |
+| `/blog/reservations-directes-hotel/` | augmenter réservations directes hôtel | `/hotels-spas/` |
+| `/blog/google-ads-entreprise-locale/` | google ads entreprise locale budget | `/tarifs/#ads` |
+| `/blog/cout-annuel-site-internet/` | coût annuel / frais d'un site après création | `/tarifs/` |
+| `/blog/apparaitre-dans-chatgpt-entreprise-locale/` | apparaître dans chatgpt entreprise locale | `/meilleur-freelance-seo-geo-vernon/` |
+| `/blog/refonte-site-sans-perdre-referencement/` | refonte site sans perdre référencement | `/tarifs/#seo` |
+
+Format GEO de chaque article (`src/content/blog/*.md`, schéma dans `src/content.config.ts`) :
+- H2 rédigés comme les sous-questions que génèrent les moteurs IA (« distribution ramifiée de requêtes », décrite par Google dans sa doc sur les fonctionnalités d'IA) ; la liste des H2 s'affiche en tête sous « Cet article répond à ».
+- **Atome de contenu** : le premier paragraphe sous chaque H2 est une réponse autonome de 1 à 3 phrases (style `.article-atoms h2 + p`).
+- Bloc « L'essentiel en 30 secondes » (`tldr`), 2 tableaux minimum, 1 citation, FAQ en frontmatter (balisée FAQPage), image principale, encart vers la page business, liens « À lire ensuite ».
+- Faits uniquement sourcés (liens vers la doc officielle Google, OpenAI, web.dev, textes de loi). Aucune statistique de marché non sourcée.
+- **Citations** : uniquement attribuées à Mathis (rédigées pour lui, à valider par lui). Jamais de citation inventée d'un tiers.
+- Les métiers affichent automatiquement les articles de leur catégorie (« Les guides pour vous »).
+
 Pages à proposer (après accord) : `/a-propos/` (E-E-A-T, Mathis), `/realisations/` (seulement avec projets réels autorisés), `/politique-de-confidentialite/`, page 404.
 À supprimer avec 301 : `/category/*` (archives WordPress vides).
 
@@ -181,13 +207,14 @@ Utilisateur et plugins (déjà installés) :
 Prises le 2026-10-06 : fin d'offre au 31/12/2026, parrainage permanent, clients uniquement professionnels, stack Astro, hébergement Netlify, accent bleu `#5271ff`, retrait des allégations non prouvées, passage au "je", design de l'accueil validé, tarifs alignés partout sur la page tarifs, offre -10 % + parrainage, statut micro-entrepreneur, TVA non applicable, adresse publiée dans les mentions légales.
 
 Encore ouvertes (demander à Mathis) :
-1. Délai pour que le parrain utilise sa remise (rien n'est affiché pour l'instant). Des CGV pour professionnels seraient utiles.
-2. Après le 31/12/2026 : le site est statique, l'offre reste affichée tant qu'il n'est pas reconstruit. Prévoir de la retirer ou de la prolonger avant cette date (modifier `OFFRE`, puis rebuild).
-3. Formulaire de contact (Netlify Forms + anti-spam ?) ou email seul ; prise de RDV (le site avait Simply Schedule Appointments).
-4. Mesure d'audience : aucune pour l'instant (mentions légales rédigées en ce sens). Si ajout, passer par une solution exemptée de consentement CNIL ou un bandeau.
-5. Robots.txt : autoriser ou non les crawlers IA d'entraînement (GPTBot, ClaudeBot, Google-Extended). Les crawlers de recherche IA (OAI-SearchBot, PerplexityBot) sont à autoriser pour le GEO. Actuellement tout est autorisé.
-6. Projets réels à montrer en réalisations (avec accord des clients), et page `/a-propos/` avec photo de Mathis.
-7. Création du site Netlify, preview, puis bascule DNS depuis Hostinger.
+1. Relire les 10 articles du blog, en particulier les citations qui lui sont attribuées et les phrases sur ses prestations (accompagnement refonte, GEO).
+2. Délai pour que le parrain utilise sa remise (rien n'est affiché pour l'instant). Des CGV pour professionnels seraient utiles.
+3. Après le 31/12/2026 : le site est statique, l'offre reste affichée tant qu'il n'est pas reconstruit. Prévoir de la retirer ou de la prolonger avant cette date (modifier `OFFRE`, puis rebuild).
+4. Formulaire de contact (Netlify Forms + anti-spam ?) ou email seul ; prise de RDV (le site avait Simply Schedule Appointments).
+5. Mesure d'audience : aucune pour l'instant (mentions légales rédigées en ce sens). Si ajout, passer par une solution exemptée de consentement CNIL ou un bandeau.
+6. Robots.txt : autoriser ou non les crawlers IA d'entraînement (GPTBot, ClaudeBot, Google-Extended). Les crawlers de recherche IA (OAI-SearchBot, PerplexityBot) sont à autoriser pour le GEO. Actuellement tout est autorisé.
+7. Projets réels à montrer en réalisations (avec accord des clients), et page `/a-propos/` avec photo de Mathis.
+8. Création du site Netlify, preview, puis bascule DNS depuis Hostinger.
 
 ## 11. Méthode
 

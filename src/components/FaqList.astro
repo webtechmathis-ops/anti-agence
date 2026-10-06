@@ -1,5 +1,5 @@
 ---
-interface Props { items: readonly { q: string; a: string }[]; headingLevel?: 'h3' | 'h4' }
+interface Props { items: readonly { q: string; a: string; more?: { href: string; label: string } }[]; headingLevel?: 'h3' | 'h4' }
 const { items, headingLevel: H = 'h3' } = Astro.props;
 ---
 <div class="faq">
@@ -7,6 +7,7 @@ const { items, headingLevel: H = 'h3' } = Astro.props;
     <details>
       <summary><H class="faq-q">{item.q}</H></summary>
       <p class="faq-a">{item.a}</p>
+      {item.more && <p class="faq-more"><a href={item.more.href}>{item.more.label}</a></p>}
     </details>
   ))}
 </div>
@@ -45,4 +46,6 @@ const { items, headingLevel: H = 'h3' } = Astro.props;
   details[open] summary::after { transform: rotate(45deg); background-color: var(--blue); }
   summary:hover .faq-q { text-decoration: underline; text-decoration-color: var(--blue); text-decoration-thickness: 0.1em; }
   .faq-a { max-width: 62ch; padding-bottom: 1.6rem; color: var(--muted); }
+  .faq-more { margin-top: -0.9rem; padding-bottom: 1.6rem; }
+  .faq-more a { color: var(--blue-ink); font-weight: 650; }
 </style>

@@ -7,6 +7,7 @@ import FaqList from '../../components/FaqList.astro';
 import CtaBand from '../../components/CtaBand.astro';
 import { METIERS_PAGES, type Metier } from '../../data/metiers';
 import { METIERS, OFFRE, SITE, formatPrice, remise } from '../../data/site';
+import { allPosts } from '../../data/blog';
 
 export function getStaticPaths() {
   return METIERS_PAGES.map((m) => ({ params: { metier: m.slug }, props: { m } }));
@@ -16,6 +17,7 @@ interface Props { m: Metier }
 const { m } = Astro.props;
 const path = `/${m.slug}/`;
 const others = METIERS.filter((x) => x.href !== path);
+const reads = (await allPosts()).filter((p) => p.category === m.slug);
 
 const schema = [
   {
@@ -146,6 +148,21 @@ const schema = [
     </div>
   </section>
 
+  {reads.length > 0 && (
+    <section class="section section-tight-top" aria-labelledby="reads-title">
+      <div class="wrap split">
+        <div class="split-head">
+          <p class="ask">Pour aller plus loin</p>
+          <h2 class="h2" id="reads-title">Les guides pour vous.</h2>
+          <a class="link" href="/blog/">Tous les articles</a>
+        </div>
+        <ul role="list" class="rules reads">
+          {reads.map((r) => <li><h3 class="h3"><a href={r.href}>{r.title}</a></h3><p>{r.chapo}</p></li>)}
+        </ul>
+      </div>
+    </section>
+  )}
+
   <!-- Autres métiers -->
   <nav class="section section-tight-top" aria-labelledby="others-title">
     <div class="wrap">
@@ -215,6 +232,9 @@ const schema = [
   .pick-why { margin-block: 1rem; color: var(--muted); }
 
   .offer-row { margin-top: clamp(2.5rem, 1rem + 4vw, 4rem); }
+
+  .reads a { text-decoration: none; }
+  .reads a:hover { text-decoration: underline; text-decoration-color: var(--blue); }
 
   .others { display: flex; flex-wrap: wrap; gap: 0.75rem; }
   .others a {
