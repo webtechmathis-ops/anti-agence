@@ -1,0 +1,180 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import FaqList from '../../components/FaqList.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { SITE, formatPrice } from '../../data/site';
+import { SEO } from '../../data/tarifs';
+
+const path = '/meilleur-freelance-seo-geo-vernon/';
+const audit = SEO.find((f) => f.id === 'audit-seo')!;
+const essentiel = SEO.find((f) => f.id === 'seo-essentiel')!;
+const avance = SEO.find((f) => f.id === 'seo-avance')!;
+
+// Comparaison honnête : les points forts des deux modèles.
+const compare = [
+  { critere: 'Interlocuteur', freelance: 'La personne qui fait le travail', agence: 'Un chef de projet, puis une équipe' },
+  { critere: 'Prix', freelance: 'Pas de frais de structure à amortir', agence: 'Plus élevés, pour couvrir l’équipe et les locaux' },
+  { critere: 'Réactivité', freelance: 'Décisions rapides, sans relais interne', agence: 'Selon la charge et les process' },
+  { critere: 'Gros projets', freelance: 'Limité par le temps d’une personne', agence: 'Plusieurs spécialistes en parallèle' },
+  { critere: 'Idéal pour', freelance: 'TPE, artisans, commerces, établissements indépendants', agence: 'Grands comptes et projets multi-équipes' },
+];
+
+const geo = [
+  { title: 'Audit GEO', text: 'Je regarde si et comment les IA citent votre entreprise aujourd’hui, et sur quelles questions.' },
+  { title: 'Structuration', text: 'Données structurées Schema.org, FAQ, pages claires : de quoi aider les IA à comprendre qui vous êtes.' },
+  { title: 'Contenus citables', text: 'Réponses directes, listes, tableaux, sources : des formats que les moteurs génératifs reprennent.' },
+  { title: 'Suivi', text: 'Tests réguliers sur ChatGPT, Perplexity et Google AI Overviews, et suivi du trafic et des recherches de marque.' },
+];
+
+const faq = [
+  {
+    q: 'Pourquoi choisir un freelance SEO plutôt qu’une agence ?',
+    a: 'Pour parler directement à la personne qui travaille sur votre site, payer moins de frais de structure et avancer vite. Une agence reste pertinente pour les très gros projets qui demandent plusieurs spécialistes en même temps.',
+  },
+  {
+    q: 'Qu’est-ce que le GEO (Generative Engine Optimization) ?',
+    a: 'Le GEO optimise vos contenus pour qu’ils soient cités par les IA génératives comme ChatGPT, Perplexity, Claude ou Gemini. Là où le SEO vise une position dans Google, le GEO vise une place dans la réponse de l’IA.',
+  },
+  {
+    q: 'Combien coûte un consultant SEO à Vernon ?',
+    a: `Chez moi, un audit SEO démarre à ${formatPrice(audit.price)}, le pack Essentiel SEO (audit + optimisations) à ${formatPrice(essentiel.price)}, et le pack Avancé SEO (3 mois de suivi et de contenus) à ${formatPrice(avance.price)}.`,
+  },
+  {
+    q: 'Comment fonctionne le SEO local à Vernon ?',
+    a: 'Il combine une fiche Google Business Profile complète, un site qui mentionne clairement Vernon et l’Eure, des avis clients réguliers et des contenus qui répondent aux recherches locales de votre métier.',
+  },
+];
+
+const schema = [
+  {
+    '@type': 'Service',
+    '@id': `${SITE.url}${path}#service`,
+    name: 'Consultant SEO et GEO freelance à Vernon',
+    serviceType: 'Référencement naturel (SEO) et Generative Engine Optimization (GEO)',
+    provider: { '@id': `${SITE.url}/#mathis` },
+    areaServed: [{ '@type': 'City', name: 'Vernon' }, { '@type': 'AdministrativeArea', name: 'Eure' }],
+  },
+  {
+    '@type': 'FAQPage',
+    '@id': `${SITE.url}${path}#faq`,
+    mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  },
+];
+---
+<BaseLayout
+  title="Freelance SEO et GEO à Vernon | Mathis Bricourt"
+  description="Mathis Bricourt, consultant SEO et GEO indépendant près de Vernon : audit, référencement local, visibilité dans les IA. Audit SEO dès 240 €."
+  path={path}
+  breadcrumb={[{ name: 'Accueil', path: '/' }, { name: 'Freelance SEO et GEO', path }]}
+  schema={schema}
+>
+  <PageHero title="Freelance SEO et GEO à Vernon" kicker="Mathis Bricourt, consultant indépendant" secondary={{ label: 'Voir les tarifs SEO', href: '/tarifs/#seo' }}>
+    Je suis Mathis Bricourt, consultant SEO et GEO indépendant, installé à Vexin-sur-Epte, à côté de Vernon.
+    J’aide les entreprises de l’Eure à remonter sur Google et à être citées par les IA, du SEO technique à la création de sites.
+  </PageHero>
+
+  <!-- Qui -->
+  <section class="section section-tight-top" aria-labelledby="qui-title">
+    <div class="wrap split">
+      <div class="split-head">
+        <p class="ask">À qui vous parlez ?</p>
+        <h2 class="h2" id="qui-title">Une seule personne, du début à la fin.</h2>
+      </div>
+      <div class="prose who">
+        <p>
+          Anti-Agence, c’est moi. Quand vous m’écrivez, c’est moi qui réponds, qui audite votre site, qui écris les
+          recommandations et qui les mets en place. Pas de commercial entre nous.
+        </p>
+        <p>
+          Mon travail couvre tout le spectre de la visibilité organique : SEO technique, contenus, liens, référencement local,
+          et maintenant GEO. J’ai travaillé sur des sites e-commerce, d’hôtellerie, de restauration, de bien-être,
+          des comparateurs et des sites d’affiliation.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Comparatif -->
+  <section class="section section-wash" aria-labelledby="compare-title">
+    <div class="wrap">
+      <p class="ask">La vraie question</p>
+      <h2 class="h2 compare-title" id="compare-title">Freelance ou agence : que choisir à Vernon ?</h2>
+      <div class="table-scroll" tabindex="0" role="region" aria-labelledby="compare-title">
+        <table class="compare">
+          <caption class="visually-hidden">Comparaison entre un freelance SEO et une agence web</caption>
+          <thead>
+            <tr><th scope="col">Critère</th><th scope="col">Freelance</th><th scope="col">Agence</th></tr>
+          </thead>
+          <tbody>
+            {compare.map((r) => (
+              <tr><th scope="row">{r.critere}</th><td>{r.freelance}</td><td>{r.agence}</td></tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="compare-note muted">Les deux modèles ont du sens. Si votre projet est celui d’une TPE ou d’un établissement indépendant, un freelance est souvent le meilleur rapport entre prix, réactivité et qualité.</p>
+    </div>
+  </section>
+
+  <!-- GEO -->
+  <section class="section section-ink" aria-labelledby="geo-title">
+    <div class="wrap">
+      <p class="ask ask-on-ink">Nouveau levier de visibilité</p>
+      <h2 class="h2" id="geo-title">GEO : être cité par les IA.</h2>
+      <p class="geo-intro">
+        ChatGPT, Perplexity et Google AI Overviews répondent directement aux questions, sans forcément afficher une liste de liens.
+        Être bien placé sur Google ne suffit plus : il faut aussi faire partie des sources que les IA reprennent.
+        J’intègre le GEO à chaque stratégie SEO.
+      </p>
+      <ul role="list" class="geo-list">
+        {geo.map((g) => <li><h3 class="h3">{g.title}</h3><p>{g.text}</p></li>)}
+      </ul>
+      <a class="link link-on-ink" href="/geo-definition-seo/">Lire le guide complet du GEO</a>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section" aria-labelledby="faq-title">
+    <div class="wrap split">
+      <div class="split-head">
+        <p class="ask">Vous vous demandez sûrement…</p>
+        <h2 class="h2" id="faq-title">Questions fréquentes</h2>
+        <a class="link" href="/faq-seo-vernon/">Toutes les questions sur le SEO à Vernon</a>
+      </div>
+      <FaqList items={faq} />
+    </div>
+  </section>
+
+  <CtaBand title="On regarde votre site ?" text={`Envoyez-moi l’adresse de votre site : je vous dis ce qui bloque et ce que je ferais, devis sous ${SITE.quoteDelay}.`} />
+</BaseLayout>
+
+<style>
+  .who { font-size: var(--fs-lead); line-height: 1.55; }
+
+  .compare-title { max-width: 16ch; }
+  .compare { width: 100%; min-width: 36rem; border-collapse: collapse; margin-top: clamp(2rem, 1rem + 3vw, 3rem); border-top: 2px solid var(--ink); }
+  .compare th, .compare td { text-align: left; vertical-align: top; padding: 1.1rem 1rem 1.1rem 0; border-bottom: 1px solid #d5dbf5; }
+  .compare thead th { font-size: var(--fs-small); color: var(--muted); font-weight: 600; }
+  .compare tbody th { font-weight: 700; width: 20%; }
+  .compare td:nth-child(2) { font-weight: 650; }
+  .compare-note { margin-top: 1.5rem; max-width: 62ch; }
+
+  .geo-intro { max-width: 62ch; margin-top: 1.25rem; color: #c9c9cf; font-size: var(--fs-lead); line-height: 1.55; }
+  .geo-list {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 2rem;
+    margin-block: clamp(2rem, 1rem + 3vw, 3.5rem);
+  }
+  .geo-list li { border-top: 3px solid var(--blue); padding-top: 1.25rem; }
+  .geo-list p { margin-top: 0.5rem; color: #c9c9cf; }
+  .link-on-ink { color: #a9b8ff; }
+
+  @media (max-width: 64rem) {
+    .geo-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 40rem) {
+    .geo-list { grid-template-columns: minmax(0, 1fr); }
+  }
+</style>

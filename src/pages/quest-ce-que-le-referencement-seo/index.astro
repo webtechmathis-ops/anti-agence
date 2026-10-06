@@ -1,0 +1,269 @@
+---
+import ArticleLayout from '../../layouts/ArticleLayout.astro';
+
+const toc = [
+  { id: 'definition', label: 'Définition du SEO' },
+  { id: 'moteur', label: 'Comment fonctionne Google' },
+  { id: 'piliers', label: 'Les 3 piliers du SEO' },
+  { id: 'technique', label: 'Le SEO technique' },
+  { id: 'contenu', label: 'Le contenu' },
+  { id: 'netlinking', label: 'Le netlinking' },
+  { id: 'local', label: 'Le SEO local' },
+  { id: 'seo-sea', label: 'SEO ou SEA ?' },
+  { id: 'outils', label: 'Les outils' },
+  { id: 'erreurs', label: 'Les erreurs fréquentes' },
+  { id: 'tendances', label: 'Ce qui change' },
+];
+
+const faq = [
+  {
+    q: 'Qu’est-ce que le SEO exactement ?',
+    a: 'Le SEO (Search Engine Optimization), ou référencement naturel, regroupe les techniques qui améliorent la position d’un site dans les résultats non payants des moteurs de recherche comme Google. Contrairement au SEA, on ne paie pas pour chaque clic.',
+  },
+  {
+    q: 'Combien de temps faut-il pour voir des résultats en SEO ?',
+    a: 'Les premiers résultats apparaissent en général entre 3 et 6 mois. Le délai dépend de la concurrence, de l’état technique du site au départ et de la régularité du travail sur le contenu et les liens.',
+  },
+  {
+    q: 'Quelle est la différence entre SEO et SEA ?',
+    a: 'Le SEO apporte du trafic organique durable en optimisant le site. Le SEA consiste à acheter des annonces, par exemple sur Google Ads. Le SEA donne des résultats immédiats, le SEO construit une visibilité sur la durée : les deux se complètent.',
+  },
+  {
+    q: 'Peut-on faire du SEO soi-même ?',
+    a: 'En partie : rédiger de bons contenus, soigner ses titres, remplir sa fiche Google. Le SEO technique, les données structurées et le netlinking demandent souvent l’aide d’un professionnel pour obtenir des résultats nets.',
+  },
+  {
+    q: 'Combien coûte le SEO ?',
+    a: 'Chez Anti-Agence, un audit SEO démarre à 240 €, le pack Essentiel SEO à 1 240 € et le pack Avancé SEO, avec 3 mois de suivi et de contenus, à 1 740 €. Le détail est sur la page tarifs.',
+  },
+  {
+    q: 'Qu’est-ce que le SEO local ?',
+    a: 'C’est l’optimisation de la visibilité d’une entreprise sur les recherches liées à une zone, comme « restaurant Vernon ». Il repose sur la fiche Google Business Profile, les avis clients, la cohérence des coordonnées et un site qui parle de votre zone.',
+  },
+];
+---
+<ArticleLayout
+  title="Qu’est-ce que le SEO ? Guide du référencement | Anti-Agence"
+  description="Le SEO, ou référencement naturel, améliore la position d’un site dans Google. Fonctionnement, technique, contenu, liens, SEO local : le guide clair."
+  path="/quest-ce-que-le-referencement-seo/"
+  h1="Qu’est-ce que le référencement SEO ? Le guide complet"
+  chapo="Le SEO, c’est l’ensemble des techniques qui rendent votre site compréhensible, pertinent et fiable aux yeux des moteurs de recherche, pour qu’ils le recommandent en priorité. Voici comment ça marche, sans jargon."
+  section="SEO"
+  published="2026-04-21T16:19:54+00:00"
+  modified="2026-10-06T12:00:00+00:00"
+  readingMinutes={12}
+  toc={toc}
+  faq={faq}
+>
+  <h2 id="definition">Définition : le référencement naturel</h2>
+  <p>
+    Le <strong>SEO</strong>, pour <em>Search Engine Optimization</em>, désigne les techniques et bonnes pratiques qui
+    améliorent la position d’un site dans les <strong>résultats organiques</strong> (non payants) des moteurs de recherche.
+    En français, on parle de <strong>référencement naturel</strong>.
+  </p>
+  <p>
+    Quand vous tapez « agence web Vernon » sur Google, le moteur affiche des résultats classés par pertinence.
+    Le but du SEO est que votre site apparaisse le plus haut possible, idéalement parmi les premiers résultats : la plupart
+    des clics se concentrent en haut de la première page.
+  </p>
+  <p>
+    Le SEO ne consiste pas à « mettre des mots-clés ». C’est une discipline complète : la technique du site, la qualité des
+    contenus, la popularité du site sur le web et l’expérience des visiteurs.
+  </p>
+  <p class="callout">
+    <strong>En résumé :</strong> le SEO rend votre site compréhensible, pertinent et fiable pour les moteurs de recherche,
+    afin qu’ils le recommandent à vos futurs clients.
+  </p>
+
+  <h2 id="moteur">Comment fonctionne un moteur de recherche ?</h2>
+  <p>Google classe les pages en trois grandes étapes.</p>
+  <h3>1. L’exploration (crawl)</h3>
+  <p>
+    Des robots, les Googlebots, parcourent le web en suivant les liens d’une page à l’autre. Ils lisent le contenu et la
+    structure de vos pages. Un site lent, mal structuré ou plein d’erreurs est plus difficile à explorer.
+  </p>
+  <h3>2. L’indexation</h3>
+  <p>
+    Google décide ensuite d’ajouter ou non la page à son index, une immense base de données. Une page bloquée par le
+    fichier robots.txt, marquée « noindex » ou trop pauvre en contenu peut ne jamais y entrer.
+  </p>
+  <h3>3. Le classement</h3>
+  <p>
+    À chaque recherche, Google classe les pages de son index selon de nombreux critères : pertinence du contenu,
+    qualité, expérience sur mobile, vitesse, popularité du site (les liens qui pointent vers lui)… Le travail du SEO
+    consiste à optimiser chacune de ces étapes.
+  </p>
+
+  <h2 id="piliers">Les 3 piliers du SEO</h2>
+  <div class="table-scroll">
+    <table>
+      <caption class="visually-hidden">Les trois piliers du référencement naturel</caption>
+      <thead>
+        <tr><th scope="col">Pilier</th><th scope="col">Objectif</th><th scope="col">Exemples d’actions</th></tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">Technique</th><td>Faciliter l’exploration et l’indexation</td><td>Vitesse, mobile, HTTPS, sitemap, balisage</td></tr>
+        <tr><th scope="row">Contenu (on-page)</th><td>Rendre chaque page pertinente et compréhensible</td><td>Mots-clés, titres, balises meta, maillage interne</td></tr>
+        <tr><th scope="row">Popularité (off-page)</th><td>Renforcer l’autorité et la confiance</td><td>Liens entrants, mentions, avis</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Négliger un des trois piliers fragilise toute la stratégie.</p>
+
+  <h2 id="technique">Le SEO technique</h2>
+  <p>C’est la partie la moins visible, et la plus fondamentale : sans base technique saine, le meilleur contenu peine à se classer.</p>
+  <h3>La vitesse de chargement</h3>
+  <p>
+    Google mesure l’expérience de chargement avec les Core Web Vitals : LCP (affichage du contenu principal), INP
+    (réactivité) et CLS (stabilité visuelle). Images compressées (WebP, AVIF), cache, code allégé et bon hébergement
+    font la différence.
+  </p>
+  <h3>Le mobile d’abord</h3>
+  <p>
+    Google utilise la version mobile de votre site pour l’évaluer. Un site qui s’affiche mal sur smartphone perd des
+    positions, et des clients.
+  </p>
+  <h3>Le HTTPS</h3>
+  <p>
+    Un site sécurisé (certificat SSL) est un signal de confiance. Sans HTTPS, les navigateurs affichent « Non sécurisé »,
+    ce qui fait fuir les visiteurs.
+  </p>
+  <h3>L’architecture et le maillage interne</h3>
+  <p>
+    Organisez vos pages par thèmes, avec des pages principales reliées à des pages secondaires, et faites des liens entre
+    elles. Une bonne règle : chaque page importante accessible en trois clics maximum depuis l’accueil.
+  </p>
+  <h3>Les balises essentielles</h3>
+  <p>
+    La balise <strong>title</strong> est la plus déterminante : elle contient votre mot-clé principal et reste sous
+    60 caractères environ. La <strong>meta description</strong> n’influence pas directement le classement mais donne envie
+    de cliquer. Les titres <strong>H1, H2, H3</strong> structurent le contenu.
+  </p>
+  <h3>Sitemap et robots.txt</h3>
+  <p>
+    Le sitemap XML liste les pages à indexer et se soumet dans la Search Console. Le fichier robots.txt indique aux robots
+    les zones à ne pas explorer.
+  </p>
+
+  <h2 id="contenu">Le contenu, cœur du référencement</h2>
+  <h3>La recherche de mots-clés</h3>
+  <p>
+    Tout part des mots que vos clients tapent vraiment. Un bon mot-clé combine un volume de recherche suffisant, une
+    intention claire et une concurrence accessible. Pour une agence web locale : « création site internet Vernon »,
+    « freelance web Eure ». Les expressions longues et précises, comme « combien coûte un site vitrine pour artisan »,
+    sont moins concurrentielles et souvent plus qualifiées.
+  </p>
+  <h3>L’intention de recherche</h3>
+  <p>
+    Il faut répondre à ce que l’internaute cherche vraiment. « Qu’est-ce que le SEO » appelle un guide, « agence SEO
+    Vernon tarif » appelle une page de prix. Regarder la première page de Google sur un mot-clé est le meilleur moyen de
+    comprendre l’intention attendue.
+  </p>
+  <h3>La structure et la lisibilité</h3>
+  <p>
+    Titres clairs, paragraphes courts, listes, tableaux et images : un contenu facile à lire est aussi plus facile à
+    comprendre pour les moteurs, et pour les IA.
+  </p>
+  <h3>Les images</h3>
+  <p>
+    Chaque image doit avoir un texte alternatif descriptif, un nom de fichier explicite
+    (« site-artisan-vernon.webp » plutôt que « IMG_2041.jpg ») et un poids réduit.
+  </p>
+  <h3>Le contenu dupliqué</h3>
+  <p>
+    Chaque page doit être unique. Deux pages sur le même sujet se font concurrence entre elles : c’est la cannibalisation.
+  </p>
+  <p>Besoin d’aide sur votre contenu ? Voir les <a href="/tarifs/#seo">formules de référencement</a>.</p>
+
+  <h2 id="netlinking">Le netlinking et l’autorité</h2>
+  <p>
+    Plus votre site reçoit de liens depuis des sites de qualité, plus Google le considère fiable. Un bon lien vient d’un
+    site proche de votre thématique, reconnu, placé dans le texte, avec une ancre pertinente.
+  </p>
+  <p>
+    À l’inverse, les liens achetés en masse sur des sites douteux peuvent nuire à votre référencement. Pour obtenir des
+    liens sains : articles invités, contenus utiles qui donnent envie d’être cités, partenariats locaux, presse locale,
+    annuaires professionnels de qualité. Variez les ancres : nom de marque, ancres descriptives, URL.
+  </p>
+
+  <h2 id="local">Le SEO local, le levier des entreprises de proximité</h2>
+  <p>
+    Commerce, artisan, restaurant, hôtel : si vos clients sont près de chez vous, le SEO local est votre meilleur allié.
+  </p>
+  <h3>La fiche Google Business Profile</h3>
+  <p>
+    C’est elle qui apparaît dans le « pack local », les trois résultats sur la carte. Remplissez tout : adresse, horaires,
+    téléphone, site, catégories, photos. Et surtout, collectez des avis et répondez-y.
+  </p>
+  <h3>Les recherches locales</h3>
+  <p>
+    « Plombier Vernon », « restaurant près de moi » : votre site doit mentionner clairement votre zone d’intervention et
+    les villes que vous servez.
+  </p>
+  <h3>La cohérence des coordonnées</h3>
+  <p>
+    Nom, adresse et téléphone doivent être identiques partout : site, fiche Google, réseaux sociaux, annuaires.
+  </p>
+  <p>
+    Vous êtes artisan, commerçant, restaurateur ou hôtelier ? Voir l’accompagnement dédié pour les
+    <a href="/artisans/">artisans</a>, les <a href="/commercants/">commerçants</a>,
+    les <a href="/restaurateurs-traiteurs/">restaurants</a> et les <a href="/hotels-spas/">hôtels et spas</a>.
+  </p>
+
+  <h2 id="seo-sea">SEO ou SEA : que choisir ?</h2>
+  <div class="table-scroll">
+    <table>
+      <caption class="visually-hidden">Comparaison entre SEO et SEA</caption>
+      <thead>
+        <tr><th scope="col">Critère</th><th scope="col">SEO (naturel)</th><th scope="col">SEA (payant)</th></tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">Coût</th><td>Investissement de départ, puis rentabilité croissante</td><td>Budget continu, paiement au clic</td></tr>
+        <tr><th scope="row">Délai</th><td>3 à 6 mois en moyenne</td><td>Immédiat</td></tr>
+        <tr><th scope="row">Durabilité</th><td>Résultats qui durent</td><td>S’arrête quand le budget s’arrête</td></tr>
+        <tr><th scope="row">Perception</th><td>Résultat organique</td><td>Marqué « Sponsorisé »</td></tr>
+        <tr><th scope="row">Contrôle</th><td>Moins de contrôle sur la position exacte</td><td>Contrôle total des enchères et du ciblage</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>
+    La bonne stratégie combine souvent les deux : le SEA apporte du trafic tout de suite pendant que le SEO monte en
+    puissance, puis le budget publicitaire peut baisser.
+  </p>
+
+  <h2 id="outils">Les outils du SEO</h2>
+  <ul>
+    <li><strong>Google Search Console</strong> (gratuit) : positions, erreurs d’indexation, sitemap, performances des pages.</li>
+    <li><strong>Outils de mots-clés</strong> : Semrush, Ahrefs, Ubersuggest, ou Google Keyword Planner pour démarrer.</li>
+    <li><strong>Audit technique</strong> : Screaming Frog pour explorer le site comme Google, PageSpeed Insights pour la vitesse.</li>
+    <li><strong>Suivi de positions</strong> : SE Ranking, Semrush ou équivalent pour mesurer l’effet de chaque action.</li>
+  </ul>
+
+  <h2 id="erreurs">Les erreurs SEO les plus fréquentes</h2>
+  <ul>
+    <li><strong>Négliger la technique :</strong> un site lent ou mal structuré plafonne, même avec de bons contenus.</li>
+    <li><strong>Viser trop haut trop tôt :</strong> commencez par des expressions précises et locales avant les mots-clés très concurrentiels.</li>
+    <li><strong>Publier sans stratégie :</strong> chaque contenu doit répondre à une intention précise.</li>
+    <li><strong>Oublier le maillage interne :</strong> un article qui ne renvoie vers aucune autre page est une occasion manquée.</li>
+    <li><strong>Acheter des liens douteux :</strong> quelques liens de qualité valent mieux que des dizaines de mauvais.</li>
+    <li><strong>Ne rien mesurer :</strong> sans suivi des positions, du trafic et des contacts, impossible d’ajuster.</li>
+  </ul>
+
+  <h2 id="tendances">Ce qui change en ce moment</h2>
+  <h3>L’IA dans les résultats</h3>
+  <p>
+    Google affiche des réponses générées (AI Overviews) en haut de nombreuses recherches, et les assistants comme ChatGPT ou
+    Perplexity deviennent des moteurs à part entière. Pour être la source citée, il faut des réponses claires, des données
+    structurées et une expertise visible : c’est le <a href="/geo-definition-seo/">GEO</a>.
+  </p>
+  <h3>L’E-E-A-T</h3>
+  <p>
+    Expérience, expertise, autorité, fiabilité : Google valorise les contenus signés par des personnes qui savent de quoi
+    elles parlent. Montrez qui écrit, citez vos sources, datez vos contenus.
+  </p>
+  <h3>L’expérience des visiteurs</h3>
+  <p>
+    Un site rapide, agréable et qui répond vite à la question posée est mieux placé. Le SEO ne consiste plus à « plaire à
+    Google », mais à offrir la meilleure réponse possible à vos visiteurs.
+  </p>
+</ArticleLayout>

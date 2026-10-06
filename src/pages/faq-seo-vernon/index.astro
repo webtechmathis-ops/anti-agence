@@ -1,0 +1,90 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import FaqList from '../../components/FaqList.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { FAQ_GROUPS } from '../../data/faq';
+import { SITE } from '../../data/site';
+
+const schema = [
+  {
+    '@type': 'FAQPage',
+    '@id': `${SITE.url}/faq-seo-vernon/#faq`,
+    mainEntity: FAQ_GROUPS.flatMap((g) => g.items).map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  },
+];
+---
+<BaseLayout
+  title="FAQ SEO et site internet à Vernon | Anti-Agence"
+  description="Prix d’un site à Vernon, SEO ou Google Ads, Google Maps, avis clients, délais, GEO : les réponses claires aux questions des entreprises locales."
+  path="/faq-seo-vernon/"
+  breadcrumb={[{ name: 'Accueil', path: '/' }, { name: 'FAQ SEO Vernon', path: '/faq-seo-vernon/' }]}
+  schema={schema}
+>
+  <PageHero title="Vos questions sur le SEO et le GEO à Vernon" kicker="Questions fréquentes">
+    Prix d’un site, délais pour être visible sur Google, Google Maps, avis clients, intelligence artificielle :
+    voici les réponses aux questions que me posent le plus souvent les entreprises de Vernon et de l’Eure.
+  </PageHero>
+
+  <nav class="wrap toc" aria-label="Thèmes de la FAQ">
+    <ul role="list">
+      {FAQ_GROUPS.map((g) => <li><a href={`#${g.id}`}>{g.title}</a></li>)}
+    </ul>
+  </nav>
+
+  {FAQ_GROUPS.map((g) => (
+    <section class="section faq-group" id={g.id} aria-labelledby={`${g.id}-title`}>
+      <div class="wrap split">
+        <div class="split-head">
+          <h2 class="h2" id={`${g.id}-title`}>{g.title}</h2>
+        </div>
+        <FaqList items={g.items} />
+      </div>
+    </section>
+  ))}
+
+  <section class="section section-wash" aria-labelledby="more-title">
+    <div class="wrap split">
+      <div class="split-head">
+        <p class="ask">Pour aller plus loin</p>
+        <h2 class="h2" id="more-title">Les guides.</h2>
+      </div>
+      <ul role="list" class="rules">
+        <li>
+          <h3 class="h3"><a href="/quest-ce-que-le-referencement-seo/">Qu’est-ce que le référencement SEO ?</a></h3>
+          <p>Le guide complet : fonctionnement de Google, SEO technique, contenu, liens, SEO local.</p>
+        </li>
+        <li>
+          <h3 class="h3"><a href="/geo-definition-seo/">GEO : définition et différence avec le SEO</a></h3>
+          <p>Comment être cité par ChatGPT, Perplexity et Google AI Overviews.</p>
+        </li>
+        <li>
+          <h3 class="h3"><a href="/tarifs/">Les tarifs</a></h3>
+          <p>Toutes les formules de sites, packs SEO et options, avec les prix.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <CtaBand title="Une autre question ?" />
+</BaseLayout>
+
+<style>
+  .toc ul { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: -1rem; }
+  .toc a {
+    display: inline-block;
+    padding: 0.6rem 1.2rem;
+    border: 2px solid var(--ink);
+    border-radius: 999px;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .toc a:hover { background: var(--ink); color: var(--paper); }
+  .faq-group + .faq-group { padding-top: 0; }
+  .rules a { text-decoration: none; }
+  .rules a:hover { text-decoration: underline; text-decoration-color: var(--blue); }
+</style>

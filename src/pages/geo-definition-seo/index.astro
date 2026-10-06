@@ -1,0 +1,158 @@
+---
+import ArticleLayout from '../../layouts/ArticleLayout.astro';
+
+const toc = [
+  { id: 'definition', label: 'Définition du GEO' },
+  { id: 'seo-vs-geo', label: 'SEO et GEO : les différences' },
+  { id: 'pourquoi', label: 'Pourquoi s’y intéresser maintenant' },
+  { id: 'piliers', label: 'Les 5 piliers du GEO' },
+  { id: 'mise-en-oeuvre', label: 'Mettre en place une stratégie GEO' },
+  { id: 'mesure', label: 'Mesurer ses résultats' },
+];
+
+const faq = [
+  {
+    q: 'Qu’est-ce que le GEO exactement ?',
+    a: 'Le GEO (Generative Engine Optimization) regroupe les techniques qui rendent un contenu plus susceptible d’être cité par les moteurs génératifs comme ChatGPT, Perplexity, Google AI Overviews ou Claude. Là où le SEO vise une position dans Google, le GEO vise à être la source reprise dans la réponse de l’IA.',
+  },
+  {
+    q: 'Le GEO remplace-t-il le SEO ?',
+    a: 'Non. Le GEO complète le SEO. Un site rapide, bien structuré, avec des contenus utiles et des liens de qualité reste la base indispensable. Les deux se travaillent ensemble.',
+  },
+  {
+    q: 'Comment optimiser son contenu pour le GEO ?',
+    a: 'Rédiger des réponses directes dès le début des pages, structurer avec des titres et des données Schema.org, citer des sources et des chiffres vérifiables, afficher clairement l’auteur et les dates, et obtenir des mentions sur des sites reconnus.',
+  },
+  {
+    q: 'Qu’est-ce que le « zéro clic » avec l’IA ?',
+    a: 'C’est quand l’internaute obtient sa réponse directement dans l’interface de l’IA, sans visiter de site. Le phénomène existait déjà avec les extraits optimisés de Google ; les assistants conversationnels l’amplifient.',
+  },
+  {
+    q: 'Le GEO est-il adapté aux petites entreprises ?',
+    a: 'Oui. Une petite entreprise peut devenir la référence sur une niche locale ou un sujet précis et être citée avant des acteurs plus gros. Le GEO récompense la précision et la spécificité, pas seulement la taille.',
+  },
+];
+---
+<ArticleLayout
+  title="GEO : définition et différence avec le SEO | Anti-Agence"
+  description="Le GEO (Generative Engine Optimization) consiste à être cité par ChatGPT, Perplexity et Google AI Overviews. Définition, différences avec le SEO, méthode."
+  path="/geo-definition-seo/"
+  h1="GEO : définition et différence avec le SEO"
+  chapo="Le GEO, c’est l’art d’optimiser vos contenus pour être cité par les intelligences artificielles génératives, là où le SEO vise à vous positionner dans Google. Voici comment ça marche, et comment s’y mettre."
+  section="GEO"
+  published="2026-04-25T15:11:16+00:00"
+  modified="2026-10-06T12:00:00+00:00"
+  readingMinutes={7}
+  toc={toc}
+  faq={faq}
+>
+  <h2 id="definition">Définition : qu’est-ce que le Generative Engine Optimization ?</h2>
+  <p>
+    Le <strong>GEO</strong>, pour <em>Generative Engine Optimization</em>, désigne l’ensemble des techniques qui visent à
+    optimiser un contenu pour qu’il soit <strong>cité, repris ou recommandé par les moteurs de recherche génératifs</strong>
+    basés sur l’intelligence artificielle.
+  </p>
+  <p>
+    Quand quelqu’un pose une question à ChatGPT, Perplexity, Google AI Overviews, Claude ou Gemini, ces outils ne renvoient
+    pas seulement une liste de liens : ils rédigent une réponse en s’appuyant sur des sources qu’ils jugent fiables.
+    L’objectif du GEO est que votre contenu fasse partie de ces sources.
+  </p>
+  <p class="callout">
+    <strong>En une phrase :</strong> le GEO, c’est optimiser son contenu pour être cité par les IA génératives, là où le SEO
+    vise à se positionner dans Google.
+  </p>
+  <p>
+    Le terme vient d’un article de recherche publié en 2023, « GEO: Generative Engine Optimization » (Aggarwal et al.,
+    chercheurs de Princeton et d’autres institutions). Il montre que certaines optimisations, comme l’ajout de citations,
+    de statistiques et de sources faisant autorité, augmentent la visibilité d’un contenu dans les réponses générées.
+    <a href="https://arxiv.org/abs/2311.09735" rel="noopener">Lire l’article sur arXiv</a>.
+  </p>
+
+  <h2 id="seo-vs-geo">SEO et GEO : quelles différences concrètes ?</h2>
+  <p>
+    Le SEO cherche à placer une page dans les résultats d’un moteur classique. Le GEO cherche à influencer la réponse
+    rédigée par une IA. Deux logiques différentes, mais complémentaires.
+  </p>
+  <div class="table-scroll">
+    <table>
+      <caption class="visually-hidden">Comparaison entre SEO et GEO</caption>
+      <thead>
+        <tr><th scope="col">Critère</th><th scope="col">SEO</th><th scope="col">GEO</th></tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">Cible</th><td>Google, Bing, moteurs classiques</td><td>ChatGPT, Perplexity, Google AI Overviews, Claude</td></tr>
+        <tr><th scope="row">Objectif</th><td>Apparaître en première page</td><td>Être cité dans la réponse de l’IA</td></tr>
+        <tr><th scope="row">Leviers clés</th><td>Balises, contenu, liens entrants</td><td>Contenu structuré, autorité, données citables</td></tr>
+        <tr><th scope="row">Mesure</th><td>Positions, trafic organique, taux de clic</td><td>Mentions dans les IA, recherches de marque</td></tr>
+        <tr><th scope="row">Délai</th><td>3 à 6 mois en général</td><td>Variable selon l’autorité du site</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>
+    À lire aussi : <a href="/quest-ce-que-le-referencement-seo/">qu’est-ce que le référencement SEO ? Le guide complet</a>.
+  </p>
+
+  <h2 id="pourquoi">Pourquoi s’y intéresser maintenant ?</h2>
+  <p>
+    Les assistants IA font désormais partie des habitudes de recherche, et Google affiche des réponses générées
+    (AI Overviews) en haut de nombreuses pages de résultats. Une partie des internautes obtient donc sa réponse sans
+    cliquer sur aucun site : c’est le « zéro clic ».
+  </p>
+  <p>
+    Pour une entreprise qui ne travaille que le SEO classique, c’est un angle mort : être absent des réponses IA, c’est
+    être invisible pour une part croissante de vos futurs clients.
+  </p>
+  <p class="callout">
+    <strong>À retenir :</strong> le SEO et le GEO ne s’opposent pas. Un bon SEO est la base du GEO, mais le GEO demande
+    des optimisations supplémentaires, propres aux moteurs génératifs.
+  </p>
+
+  <h2 id="piliers">Les 5 piliers du GEO</h2>
+  <ol>
+    <li><strong>Autorité thématique.</strong> Être reconnu comme une référence sur un sujet précis : publier régulièrement, citer ses sources, montrer une vraie expérience de terrain.</li>
+    <li><strong>Structure et clarté.</strong> Des titres bien hiérarchisés, des réponses directes, des définitions précises. Les IA extraient des blocs structurés, pas des pavés de texte.</li>
+    <li><strong>Données factuelles.</strong> Des chiffres sourcés, des études citées, des informations vérifiables.</li>
+    <li><strong>E-E-A-T.</strong> Expérience, expertise, autorité, fiabilité : montrer qui écrit, afficher ses compétences, dater ses contenus.</li>
+    <li><strong>Présence en dehors de votre site.</strong> Être mentionné dans des médias, des annuaires de qualité ou des forums spécialisés augmente les chances d’être connu, et cité, par les IA.</li>
+  </ol>
+
+  <h2 id="mise-en-oeuvre">Comment mettre en place une stratégie GEO ?</h2>
+  <h3>1. Rédiger des réponses directes et citables</h3>
+  <p>
+    Répondez clairement à la question principale dès les premières lignes. Chaque section doit pouvoir être extraite
+    seule et garder son sens.
+  </p>
+  <h3>2. Travailler les données structurées</h3>
+  <p>
+    Les balises Schema.org (Organization, Article, FAQPage, Service…) aident les moteurs à comprendre la nature de votre
+    contenu et qui en est l’auteur.
+  </p>
+  <h3>3. Obtenir des mentions sur des sources reconnues</h3>
+  <p>
+    Articles de presse locale, annuaires professionnels, partenaires, forums experts : plus votre entreprise est citée
+    ailleurs, plus elle a de chances d’être reprise.
+  </p>
+  <h3>4. Écrire pour les questions naturelles</h3>
+  <p>
+    On pose aux IA des questions complètes : « quel artisan pour refaire ma toiture à Vernon ? ». Vos pages doivent
+    répondre à ces formulations, par exemple avec une FAQ.
+  </p>
+  <h3>5. Afficher l’auteur, les sources et les dates</h3>
+  <p>
+    Un contenu signé, sourcé et daté inspire plus confiance qu’un texte anonyme. Une page « à propos » détaillée aide
+    aussi les moteurs à évaluer votre légitimité.
+  </p>
+
+  <h2 id="mesure">Comment mesurer ses résultats GEO ?</h2>
+  <p>Les outils sont encore jeunes. Les méthodes qui fonctionnent aujourd’hui :</p>
+  <ul>
+    <li><strong>Tests manuels :</strong> poser régulièrement vos questions cibles à ChatGPT, Perplexity, Claude et Google, et noter si vous êtes cité.</li>
+    <li><strong>Outils de suivi :</strong> des plateformes spécialisées commencent à suivre les mentions de marque dans les réponses IA.</li>
+    <li><strong>Analyse des sources citées :</strong> regarder quels contenus les IA reprennent sur votre sujet, et s’en inspirer.</li>
+    <li><strong>Recherches de marque :</strong> suivre dans Google Search Console l’évolution des recherches sur votre nom, un signal indirect de notoriété.</li>
+  </ul>
+  <p>
+    Vous voulez savoir si les IA citent déjà votre entreprise ? C’est le point de départ de l’<a href="/meilleur-freelance-seo-geo-vernon/">accompagnement GEO</a>
+    que je propose, avec un <a href="/tarifs/#audit-seo">audit dès 240 €</a>.
+  </p>
+</ArticleLayout>
