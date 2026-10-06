@@ -11,7 +11,7 @@ Activité : freelance création de site internet, SEO et GEO, Vernon (Eure, 27)
 
 1. **Zéro invention.** Aucun chiffre, résultat client, avis, note, logo client, référence, tarif ou délai qui ne figure pas dans la section 4. Information manquante : commentaire `<!-- A CONFIRMER : ... -->` dans le code, jamais publié tel quel, et question à Mathis.
 2. **Plan avant création.** Proposer, attendre la validation de Mathis, puis construire. Pas de nouveau repo, projet d'hébergement, domaine ou DNS sans accord explicite.
-3. **Aucune mise en production sans validation écrite.** Toujours une preview d'abord.
+3. **Aucune mise en production sans validation écrite.** La branche `refonte-astro` EST la production : pas de push sans accord de Mathis.
 4. **Ne jamais casser une URL indexée.** Les URLs de la section 6 restent identiques. Tout changement passe par une 301 dans `public/_redirects` (Netlify). Le sitemap est généré par `@astrojs/sitemap`.
 5. **Aucun secret dans le repo** (tokens, clés API, mots de passe). `.env*`, `.vercel/`, `.netlify/`, `node_modules/` dans `.gitignore`.
 6. **Allégations commerciales prudentes.** Pas de "n°1", "meilleur", "classement indépendant", note étoilée ou pourcentage de résultat sans preuve fournie par Mathis (voir section 5). Recommandation de prudence, pas un avis juridique.
@@ -35,7 +35,8 @@ Objectifs : être trouvé sur "création site internet Vernon", "SEO Vernon", "f
 - **Ancien export WordPress/Divi déplacé dans `legacy/`** : source de contenu uniquement, ni servi ni buildé. À supprimer du repo une fois toutes les pages migrées.
 - `wp-content/` et `wp-includes/` retirés de l'index git (l'export complet reste dans `../anti-agence.zip`, 187 Mo). Images utiles extraites, renommées sans "vannes", dans `src/assets/`.
 - Fichier de validation Google Search Console : `public/google54c688cfa25bc6ac.html` (servi à la racine). Après déploiement, vérifier qu'il répond en 200 sans redirection.
-- Branche `refonte-astro` poussée sur GitHub (webtechmathis-ops/anti-agence). Le `main` distant contient l'ancien site.
+- **En production depuis le 2026-10-06** : le projet Netlify `lambent-bienenstitch-507f25` publie la branche `refonte-astro` sur https://anti-agence-web.fr (branche par défaut GitHub = `refonte-astro`). Tout push sur `refonte-astro` part donc en production : vérifier avec `preflight` avant chaque push. Le `main` distant contient l'ancien export (archive).
+- Vérifié en ligne le 2026-10-06 : 23 pages en 200, redirections WordPress et anciens sitemaps en 301, 404 personnalisée, www et http redirigés vers https://anti-agence-web.fr, en-têtes de sécurité et cache long actifs, fichier Search Console en 200 sans redirection.
 - Logo : `src/assets/brand/logo-anti-agence.png` (lettrage "ANTI AGENCE" bleu `#5271ff`, rogné). Favicon redessiné en SVG (`public/favicon.svg`, 2 quarts de cercle + 2 pastilles), `apple-touch-icon.png`, `og-default.jpg` (1200x630).
 - npm : le cache `~/.npm` a des fichiers root, installer avec `npm install --cache <dossier temporaire>` ou corriger les droits (`sudo chown -R $(whoami) ~/.npm`).
 - Baseline de l'ancien site (2026-10-06) : 12 pages, 234 erreurs, 18 alertes. Nouveau build : 12 pages, 0 erreur, 0 alerte.
@@ -214,7 +215,7 @@ Encore ouvertes (demander à Mathis) :
 5. Mesure d'audience : aucune pour l'instant (mentions légales rédigées en ce sens). Si ajout, passer par une solution exemptée de consentement CNIL ou un bandeau.
 6. Robots.txt : autoriser ou non les crawlers IA d'entraînement (GPTBot, ClaudeBot, Google-Extended). Les crawlers de recherche IA (OAI-SearchBot, PerplexityBot) sont à autoriser pour le GEO. Actuellement tout est autorisé.
 7. Projets réels à montrer en réalisations (avec accord des clients), et page `/a-propos/` avec photo de Mathis.
-8. Création du site Netlify, preview, puis bascule DNS depuis Hostinger.
+8. Search Console : valider la propriété avec le fichier HTML, soumettre `sitemap-index.xml`, suivre l'indexation et les 404 des anciennes URL (images WordPress notamment) pendant quelques semaines.
 
 ## 11. Méthode
 
