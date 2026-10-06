@@ -1,0 +1,99 @@
+---
+interface Props { items: readonly string[] }
+const { items } = Astro.props;
+---
+<div class="marquee">
+  <button class="marquee-toggle" type="button" aria-pressed="false">
+    <span class="visually-hidden">Pause du texte défilant</span>
+  </button>
+  <div class="marquee-track">
+    <ul role="list" class="marquee-group">
+      {items.map((item) => <li>{item}</li>)}
+    </ul>
+    <ul role="list" class="marquee-group" aria-hidden="true">
+      {items.map((item) => <li>{item}</li>)}
+    </ul>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('.marquee-toggle').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const paused = btn.getAttribute('aria-pressed') !== 'true';
+      btn.setAttribute('aria-pressed', String(paused));
+      btn.closest('.marquee')?.classList.toggle('is-paused', paused);
+    });
+  });
+</script>
+
+<style>
+  .marquee {
+    position: relative;
+    overflow: hidden;
+    background: var(--blue);
+    color: var(--ink);
+    padding-block: 1.1rem;
+    border-block: 2px solid var(--ink);
+  }
+  .marquee-track { display: flex; width: max-content; animation: marquee 38s linear infinite; }
+  .marquee:hover .marquee-track,
+  .marquee.is-paused .marquee-track { animation-play-state: paused; }
+
+  /* Bouton pause (WCAG 2.2.2) : pastille noire, icône pause ou lecture */
+  .marquee-toggle {
+    position: absolute;
+    right: var(--gutter);
+    top: 50%;
+    z-index: 1;
+    width: 2.75rem;
+    height: 2.75rem;
+    transform: translateY(-50%);
+    border: 2px solid var(--blue);
+    border-radius: 50%;
+    background:
+      linear-gradient(var(--paper), var(--paper)) calc(50% - 4px) 50% / 3px 0.9rem no-repeat,
+      linear-gradient(var(--paper), var(--paper)) calc(50% + 4px) 50% / 3px 0.9rem no-repeat,
+      var(--ink);
+    cursor: pointer;
+  }
+  .marquee-toggle[aria-pressed='true'] {
+    background: var(--ink);
+  }
+  .marquee-toggle[aria-pressed='true']::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 0;
+    height: 0;
+    border-block: 0.5rem solid transparent;
+    border-left: 0.8rem solid var(--paper);
+    transform: translateX(2px);
+  }
+  .marquee-group { display: flex; flex-shrink: 0; }
+  .marquee-group li {
+    display: flex;
+    align-items: center;
+    font-size: clamp(1.25rem, 1rem + 1vw, 1.75rem);
+    font-weight: 800;
+    font-stretch: 80%;
+    white-space: nowrap;
+  }
+  /* Séparateur : la pastille du favicon */
+  .marquee-group li::after {
+    content: '';
+    width: 0.55em;
+    height: 0.55em;
+    margin-inline: 1.4em;
+    border-radius: 50%;
+    background: var(--ink);
+  }
+  @keyframes marquee { to { transform: translateX(-50%); } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track { animation: none; width: auto; }
+    .marquee-group { flex-wrap: wrap; justify-content: center; row-gap: 0.5rem; padding-inline: var(--gutter); }
+    .marquee-group[aria-hidden='true'],
+    .marquee-toggle { display: none; }
+  }
+</style>

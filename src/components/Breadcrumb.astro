@@ -1,0 +1,23 @@
+---
+interface Props { items: { name: string; path: string }[] }
+const { items } = Astro.props;
+---
+<nav class="wrap breadcrumb" aria-label="Fil d’Ariane">
+  <ol role="list">
+    {items.map((item, i) => (
+      <li>
+        {i < items.length - 1
+          ? <a href={item.path}>{item.name}</a>
+          : <span aria-current="page">{item.name}</span>}
+      </li>
+    ))}
+  </ol>
+</nav>
+
+<style>
+  .breadcrumb { padding-top: 1.5rem; font-size: var(--fs-small); color: var(--muted); }
+  ol { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  li + li::before { content: '/'; margin-right: 0.5rem; color: var(--line); }
+  a { color: var(--muted); }
+  [aria-current] { color: var(--ink); font-weight: 600; }
+</style>

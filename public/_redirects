@@ -1,0 +1,22 @@
+# Anciennes URLs WordPress (archives, templates Divi, auteur)
+/author/*            /   301
+/layout_type/*       /   301
+/module_width/*      /   301
+/scope/*             /   301
+/category/*          /   301
+
+# Anciens sitemaps Yoast vers le sitemap Astro
+/sitemap_index.xml   /sitemap-index.xml   301
+/sitemap.xml         /sitemap-index.xml   301
+/page-sitemap.xml    /sitemap-index.xml   301
+/post-sitemap.xml    /sitemap-index.xml   301
+/category-sitemap.xml /sitemap-index.xml  301
+
+# Ressources WordPress inexistantes en statique
+/feed                /   404
+/comments/feed       /   404
+/wp-json/*           /   404
+/xmlrpc.php          /   404
+/wp-login.php        /   404
+/wp-admin/*          /   404
+/wp-content/*        /   404

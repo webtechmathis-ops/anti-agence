@@ -1,0 +1,75 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/brand/logo-anti-agence.png';
+import { METIERS, NAV, SITE } from '../data/site';
+
+const year = new Date().getFullYear();
+---
+<footer class="footer">
+  <div class="wrap footer-grid">
+    <div class="footer-id">
+      <Image src={logo} alt="Anti-Agence" width={140} height={65} class="footer-logo" />
+      <p>{SITE.owner}, freelance création de site internet, SEO et GEO à {SITE.city}.</p>
+      <address>
+        <a href={`mailto:${SITE.email}`}>{SITE.email}</a><br />
+        <a href={SITE.phoneHref}>{SITE.phone}</a><br />
+        {SITE.area}
+      </address>
+    </div>
+
+    <nav aria-label="Pages du site">
+      <p class="footer-title">Le site</p>
+      <ul role="list">
+        {NAV.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+        <li><a href={SITE.ctaHref}>Contact et devis</a></li>
+      </ul>
+    </nav>
+
+    <nav aria-label="Métiers accompagnés">
+      <p class="footer-title">Métiers</p>
+      <ul role="list">
+        {METIERS.map((m) => <li><a href={m.href}>{m.label}</a></li>)}
+      </ul>
+    </nav>
+  </div>
+
+  <div class="wrap footer-bottom">
+    <p>© {year} {SITE.name}. Fait main à Vernon (et sans WordPress).</p>
+    <a href="/mentions-legales/">Mentions légales</a>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--ink);
+    color: var(--paper);
+    padding-block: clamp(3.5rem, 2rem + 5vw, 6rem) 2rem;
+  }
+  .footer a { text-decoration: none; }
+  .footer a:hover { text-decoration: underline; text-decoration-color: var(--blue); }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 3rem;
+  }
+  .footer-logo { width: 140px; height: auto; filter: brightness(0) invert(1); margin-bottom: 1.5rem; }
+  .footer-id p { max-width: 34ch; color: #c9c9cf; }
+  address { font-style: normal; margin-top: 1.25rem; line-height: 1.9; }
+  .footer-title { font-weight: 700; color: var(--blue); margin-bottom: 0.75rem; }
+  .footer li + li { margin-top: 0.4rem; }
+  .footer-bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 4rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #2a2a2e;
+    font-size: var(--fs-small);
+    color: #c9c9cf;
+  }
+  @media (max-width: 48rem) {
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .footer-id { grid-column: 1 / -1; }
+  }
+</style>
