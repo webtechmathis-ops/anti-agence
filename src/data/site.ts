@@ -36,12 +36,22 @@ export const OFFRE = {
 export const offreFin = new Date(`${OFFRE.fin}T23:59:59`).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
 export const remise = (n: number, pct: number = OFFRE.remise) => Math.round(n * (1 - pct / 100));
 
+export const BLOG_CATEGORIES = {
+  artisans: 'Artisans',
+  commercants: 'Commerçants',
+  'restaurateurs-traiteurs': 'Restaurants',
+  'hotels-spas': 'Hôtels et spas',
+  seo: 'SEO',
+  geo: 'GEO',
+  tarifs: 'Budget',
+} as const;
+
 export const NAV = [
   { label: 'Services', href: '/#services' },
   { label: 'Métiers', href: '/#metiers' },
   { label: 'Tarifs', href: '/tarifs/' },
+  { label: 'Blog', href: '/blog/' },
   { label: 'FAQ', href: '/faq-seo-vernon/' },
-  { label: 'Le GEO', href: '/geo-definition-seo/' },
 ] as const;
 
 export const METIERS = [

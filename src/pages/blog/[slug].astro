@@ -1,0 +1,40 @@
+---
+import { getCollection, render } from 'astro:content';
+import ArticleLayout from '../../layouts/ArticleLayout.astro';
+import { BLOG_CATEGORIES } from '../../data/site';
+import { resolveLinks } from '../../data/blog';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const d = post.data;
+const { Content, headings } = await render(post);
+const toc = headings.filter((h) => h.depth === 2).map((h) => ({ id: h.slug, label: h.text }));
+const related = (await resolveLinks(d.related)).map((r) => ({ href: r.href, title: r.title, chapo: r.chapo }));
+---
+<ArticleLayout
+  title={d.title}
+  description={d.description}
+  path={`/blog/${post.id}/`}
+  h1={d.h1}
+  crumb={d.crumb}
+  chapo={d.chapo}
+  section={BLOG_CATEGORIES[d.category]}
+  published={d.published}
+  modified={d.modified}
+  readingMinutes={d.readingMinutes}
+  toc={toc}
+  faq={d.faq}
+  hero={d.hero}
+  heroAlt={d.heroAlt}
+  tldr={d.tldr}
+  money={d.money}
+  related={related}
+  schemaType="BlogPosting"
+  atoms
+>
+  <Content />
+</ArticleLayout>

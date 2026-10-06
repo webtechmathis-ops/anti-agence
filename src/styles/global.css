@@ -230,6 +230,35 @@ a, button, summary { touch-action: manipulation; -webkit-tap-highlight-color: tr
 .article thead th { font-size: var(--fs-small); color: var(--muted); font-weight: 600; }
 .article tbody th { font-weight: 700; }
 .table-scroll { overflow-x: auto; }
+.article img { width: 100%; height: auto; border-radius: 0.75rem; }
+.article figure { margin-block: 2em; }
+.article figcaption { margin-top: 0.6rem; font-size: var(--fs-small); color: var(--muted); }
+.article blockquote {
+  margin: 2.2em 0;
+  padding: 0 0 0 1.5rem;
+  border-left: 6px solid var(--blue);
+}
+.article blockquote p {
+  font-size: clamp(1.375rem, 1.1rem + 1vw, 1.875rem);
+  font-weight: 700;
+  font-stretch: 85%;
+  font-variation-settings: 'opsz' 48;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+.article blockquote p + p { margin-top: 0.75rem; }
+.article blockquote cite { font-size: var(--fs-small); font-style: normal; font-weight: 600; font-stretch: 100%; font-variation-settings: 'opsz' 14; color: var(--muted); letter-spacing: 0; }
+/* Atomes de contenu : la réponse courte sous chaque H2 se lit seule */
+.article-atoms h2 + p {
+  padding: 0.9rem 1.1rem;
+  border-radius: 0 0.75rem 0.75rem 0;
+  border-left: 4px solid var(--blue);
+  background: var(--blue-wash);
+  font-weight: 600;
+  line-height: 1.5;
+}
+.diagram { padding: 1.25rem; border: 1px solid var(--line); border-radius: var(--radius); }
+.diagram svg { width: 100%; height: auto; }
 .callout {
   padding: 1.25rem 1.5rem;
   border-left: 4px solid var(--blue);
@@ -243,6 +272,7 @@ a, button, summary { touch-action: manipulation; -webkit-tap-highlight-color: tr
 }
 @media (max-width: 48rem) {
   .rules-2 { grid-template-columns: minmax(0, 1fr); }
+  .article table { display: block; overflow-x: auto; }
 }
 
 @media (prefers-reduced-motion: reduce) {

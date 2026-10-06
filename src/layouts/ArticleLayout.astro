@@ -1,4 +1,6 @@
 ---
+import type { ImageMetadata } from 'astro';
+import { Image, getImage } from 'astro:assets';
 import BaseLayout from './BaseLayout.astro';
 import FaqList from '../components/FaqList.astro';
 import CtaBand from '../components/CtaBand.astro';
@@ -11,31 +13,49 @@ interface Props {
   h1: string;
   chapo: string;
   section: string;
-  published: string; // ISO
-  modified: string; // ISO
+  crumb?: string; // libellé court du fil d'Ariane
+  published: string | Date;
+  modified: string | Date;
   readingMinutes: number;
   toc: { id: string; label: string }[];
-  faq: { q: string; a: string }[];
+  faq: readonly { q: string; a: string }[];
+  // Options blog
+  hero?: ImageMetadata;
+  heroAlt?: string;
+  tldr?: string[];
+  money?: { href: string; label: string; pitch: string };
+  related?: { href: string; title: string; chapo: string }[];
+  schemaType?: 'Article' | 'BlogPosting';
+  atoms?: boolean; // style « réponse courte » sous chaque H2
 }
 
-const { title, description, path, h1, chapo, section, published, modified, readingMinutes, toc, faq } = Astro.props;
-const fmt = (iso: string) => new Date(iso).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+const {
+  title, description, path, h1, chapo, section, crumb = section, published, modified, readingMinutes, toc, faq,
+  hero, heroAlt = '', tldr, money, related = [], schemaType = 'Article', atoms = false,
+} = Astro.props;
+
+const iso = (d: string | Date) => new Date(d).toISOString();
+const fmt = (d: string | Date) => new Date(d).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
 const url = `${SITE.url}${path}`;
+const heroUrl = hero ? new URL((await getImage({ src: hero, width: 1200, format: 'jpeg' })).src, SITE.url).href : `${SITE.url}/og-default.jpg`;
+const ogImage = hero ? new URL(heroUrl).pathname : undefined;
 
 const schema = [
   {
-    '@type': 'Article',
+    '@type': schemaType,
     '@id': `${url}#article`,
     headline: h1,
     description,
     inLanguage: 'fr-FR',
     articleSection: section,
-    datePublished: published,
-    dateModified: modified,
+    datePublished: iso(published),
+    dateModified: iso(modified),
     author: { '@id': `${SITE.url}/#mathis` },
     publisher: { '@id': `${SITE.url}/#org` },
     mainEntityOfPage: { '@id': `${url}#webpage` },
-    image: `${SITE.url}/og-default.jpg`,
+    image: heroUrl,
+    ...(schemaType === 'BlogPosting' ? { isPartOf: { '@type': 'Blog', '@id': `${SITE.url}/blog/#blog`, name: 'Blog Anti-Agence' } } : {}),
+    ...(money ? { about: { '@id': `${SITE.url}${money.href}#webpage` } } : {}),
   },
   {
     '@type': 'FAQPage',
@@ -48,32 +68,56 @@ const schema = [
   title={title}
   description={description}
   path={path}
-  breadcrumb={[{ name: 'Accueil', path: '/' }, { name: 'Guides', path: '/faq-seo-vernon/' }, { name: section, path }]}
+  ogImage={ogImage}
+  breadcrumb={[{ name: 'Accueil', path: '/' }, { name: 'Blog', path: '/blog/' }, { name: crumb, path }]}
   schema={schema}
 >
   <header class="wrap article-head">
-    <p class="kicker">Guide {section}</p>
+    <p class="kicker"><a href="/blog/">Blog</a> / {section}</p>
     <h1 class="display-sm article-title">{h1}</h1>
     <p class="lead chapo">{chapo}</p>
     <ul role="list" class="meta">
       <li>Par <a href="/meilleur-freelance-seo-geo-vernon/">{SITE.owner}</a>, consultant SEO et GEO</li>
-      <li>Publié le <time datetime={published}>{fmt(published)}</time></li>
-      <li>Mis à jour le <time datetime={modified}>{fmt(modified)}</time></li>
+      <li>Publié le <time datetime={iso(published)}>{fmt(published)}</time></li>
+      <li>Mis à jour le <time datetime={iso(modified)}>{fmt(modified)}</time></li>
       <li>{readingMinutes} min de lecture</li>
     </ul>
   </header>
 
+  {hero && (
+    <div class="wrap">
+      <Image src={hero} alt={heroAlt} width={1600} widths={[640, 1024, 1600]} sizes="(max-width: 82rem) 100vw, 82rem" loading="eager" fetchpriority="high" class="hero-img" />
+    </div>
+  )}
+
   <div class="wrap article-grid">
     <nav class="toc" aria-labelledby="toc-title">
-      <p class="toc-title" id="toc-title">Sommaire</p>
+      <p class="toc-title" id="toc-title">{atoms ? 'Cet article répond à' : 'Sommaire'}</p>
       <ol role="list">
         {toc.map((t) => <li><a href={`#${t.id}`}>{t.label}</a></li>)}
         <li><a href="#faq-title">Questions fréquentes</a></li>
       </ol>
     </nav>
 
-    <article class="article">
+    <article class:list={['article', { 'article-atoms': atoms }]}>
+      {tldr && (
+        <aside class="tldr" aria-labelledby="tldr-title">
+          <p class="tldr-title" id="tldr-title">L’essentiel en 30 secondes</p>
+          <ul role="list" class="dots">
+            {tldr.map((t) => <li>{t}</li>)}
+          </ul>
+        </aside>
+      )}
+
       <slot />
+
+      {money && (
+        <aside class="money" aria-label="Offre liée à cet article">
+          <p class="money-label">Ce guide vous concerne ?</p>
+          <p class="money-pitch">{money.pitch}</p>
+          <a class="btn btn-primary" href={money.href}>{money.label}</a>
+        </aside>
+      )}
 
       <h2 id="faq-title">Questions fréquentes</h2>
       <FaqList items={faq} />
@@ -86,6 +130,17 @@ const schema = [
         </p>
         <a href="/meilleur-freelance-seo-geo-vernon/">En savoir plus sur mon approche</a>
       </aside>
+
+      {related.length > 0 && (
+        <nav class="related" aria-labelledby="related-title">
+          <h2 id="related-title">À lire ensuite</h2>
+          <ul role="list" class="rules">
+            {related.map((r) => (
+              <li><h3 class="h3"><a href={r.href}>{r.title}</a></h3><p>{r.chapo}</p></li>
+            ))}
+          </ul>
+        </nav>
+      )}
     </article>
   </div>
 
@@ -95,7 +150,8 @@ const schema = [
 <style>
   .article-head { padding-block: clamp(2rem, 1rem + 3vw, 3.5rem) clamp(2.5rem, 1.5rem + 3vw, 4rem); }
   .kicker { font-weight: 600; margin-bottom: 1.25rem; }
-  .article-title { max-width: 18ch; }
+  .kicker a { color: var(--blue-ink); }
+  .article-title { max-width: 20ch; }
   .chapo { margin-top: 1.75rem; max-width: 52ch; }
   .meta {
     display: flex;
@@ -109,9 +165,17 @@ const schema = [
   }
   .meta a { color: var(--ink); font-weight: 650; }
 
+  .hero-img {
+    width: 100%;
+    aspect-ratio: 21 / 9;
+    object-fit: cover;
+    border-radius: var(--radius);
+    margin-bottom: clamp(2.5rem, 1.5rem + 3vw, 4rem);
+  }
+
   .article-grid {
     display: grid;
-    grid-template-columns: minmax(0, 15rem) minmax(0, 46rem);
+    grid-template-columns: minmax(0, 16rem) minmax(0, 46rem);
     gap: clamp(2rem, 1rem + 5vw, 6rem);
     align-items: start;
     padding-bottom: var(--section);
@@ -121,6 +185,27 @@ const schema = [
   .toc li { border-bottom: 1px solid var(--line); }
   .toc a { display: block; padding-block: 0.55rem; text-decoration: none; color: var(--muted); }
   .toc a:hover { color: var(--ink); }
+
+  .tldr {
+    padding: 1.5rem 1.75rem;
+    border: 2px solid var(--ink);
+    border-radius: var(--radius);
+    background: var(--blue-wash);
+    font-size: 1.0625rem;
+  }
+  .tldr-title { font-weight: 800; font-size: var(--fs-h3); margin-bottom: 0.75rem; }
+
+  .money {
+    margin-top: 3rem;
+    padding: clamp(1.5rem, 1rem + 1.5vw, 2rem);
+    border-radius: var(--radius);
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .money-label { color: #a9b8ff; font-weight: 700; }
+  .money-pitch { margin-block: 0.5rem 1.25rem; font-size: var(--fs-lead); line-height: 1.45; }
+  .money .btn-primary { background: var(--blue); border-color: var(--blue); color: var(--ink); }
+  .money .btn-primary:hover { background: var(--paper); border-color: var(--paper); }
 
   .author {
     margin-top: 3rem;
@@ -132,8 +217,14 @@ const schema = [
   .author-name { font-weight: 800; font-size: var(--fs-h3); }
   .author p + p, .author a { margin-top: 0.5rem; display: inline-block; }
 
+  .related .rules a { color: var(--ink); text-decoration: none; }
+  .related .rules a:hover { text-decoration: underline; text-decoration-color: var(--blue); }
+
   @media (max-width: 64rem) {
     .article-grid { grid-template-columns: minmax(0, 1fr); }
     .toc { position: static; }
+  }
+  @media (max-width: 48rem) {
+    .hero-img { aspect-ratio: 4 / 3; }
   }
 </style>

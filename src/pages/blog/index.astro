@@ -1,0 +1,96 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { BLOG_CATEGORIES, SITE } from '../../data/site';
+import { PILLARS, allPosts } from '../../data/blog';
+
+const posts = await allPosts();
+const groups = [
+  { key: 'artisans', money: { href: '/artisans/', label: 'L’offre pour artisans' } },
+  { key: 'commercants', money: { href: '/commercants/', label: 'L’offre pour commerçants' } },
+  { key: 'restaurateurs-traiteurs', money: { href: '/restaurateurs-traiteurs/', label: 'L’offre pour restaurants' } },
+  { key: 'hotels-spas', money: { href: '/hotels-spas/', label: 'L’offre pour hôtels et spas' } },
+  { key: 'tarifs', money: { href: '/tarifs/', label: 'Voir les tarifs' } },
+  { key: 'seo', money: { href: '/tarifs/#seo', label: 'Les packs SEO' } },
+  { key: 'geo', money: { href: '/meilleur-freelance-seo-geo-vernon/', label: 'L’accompagnement GEO' } },
+] as const;
+
+const fmt = (d: Date) => d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+
+const schema = [
+  {
+    '@type': 'Blog',
+    '@id': `${SITE.url}/blog/#blog`,
+    name: 'Blog Anti-Agence',
+    description: 'Guides pratiques sur la création de site, le SEO local et le GEO pour les entreprises de Vernon et de l’Eure.',
+    publisher: { '@id': `${SITE.url}/#org` },
+    blogPost: posts.map((p) => ({ '@type': 'BlogPosting', headline: p.title, url: `${SITE.url}${p.href}`, datePublished: p.date.toISOString() })),
+  },
+];
+---
+<BaseLayout
+  title="Blog site internet, SEO et GEO | Anti-Agence"
+  description="Guides pratiques pour artisans, commerçants, restaurants et hôtels : fiche Google, avis, réservations, Google Ads, SEO local et visibilité dans les IA."
+  path="/blog/"
+  breadcrumb={[{ name: 'Accueil', path: '/' }, { name: 'Blog', path: '/blog/' }]}
+  schema={schema}
+>
+  <PageHero title="Le blog des entreprises qui veulent être trouvées" kicker="Guides pratiques" secondary={{ label: 'Voir les tarifs', href: '/tarifs/' }}>
+    Fiche Google, avis clients, réservations, publicité, SEO local, intelligence artificielle : des guides concrets,
+    écrits pour les artisans, commerçants, restaurateurs et hôtels de Vernon et de l’Eure. Chaque article répond à une
+    question précise, sans jargon.
+  </PageHero>
+
+  <section class="section section-tight-top" aria-labelledby="pillars-title">
+    <div class="wrap split">
+      <div class="split-head">
+        <p class="ask">Pour commencer</p>
+        <h2 class="h2" id="pillars-title">Les guides de fond.</h2>
+      </div>
+      <ul role="list" class="rules posts">
+        {PILLARS.map((p) => (
+          <li>
+            <p class="post-cat">{BLOG_CATEGORIES[p.category as keyof typeof BLOG_CATEGORIES]}</p>
+            <h3 class="h3"><a href={p.href}>{p.title}</a></h3>
+            <p>{p.chapo}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  {groups.map((g) => {
+    const list = posts.filter((p) => p.category === g.key);
+    if (!list.length) return null;
+    return (
+      <section class="section group" id={g.key} aria-labelledby={`${g.key}-title`}>
+        <div class="wrap split">
+          <div class="split-head">
+            <h2 class="h2" id={`${g.key}-title`}>{BLOG_CATEGORIES[g.key]}</h2>
+            <a class="link" href={g.money.href}>{g.money.label}</a>
+          </div>
+          <ul role="list" class="rules posts">
+            {list.map((p) => (
+              <li>
+                <p class="post-cat"><time datetime={p.date.toISOString()}>{fmt(p.date)}</time></p>
+                <h3 class="h3"><a href={p.href}>{p.title}</a></h3>
+                <p>{p.chapo}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    );
+  })}
+
+  <CtaBand title="Une question sur votre cas ?" />
+</BaseLayout>
+
+<style>
+  .group { padding-top: 0; }
+  .posts a { text-decoration: none; }
+  .posts a:hover { text-decoration: underline; text-decoration-color: var(--blue); text-decoration-thickness: 0.1em; }
+  .posts .post-cat { margin-top: 0; margin-bottom: 0.35rem; font-size: var(--fs-small); font-weight: 600; color: var(--blue-ink); }
+  .posts li > p:last-child { margin-top: 0.5rem; }
+</style>
