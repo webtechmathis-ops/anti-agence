@@ -9,7 +9,7 @@ const { currentPath } = Astro.props;
 <header class="header">
   <div class="wrap header-inner">
     <a class="brand" href="/">
-      <Image src={logo} alt="Anti-Agence, accueil" width={104} height={48} loading="eager" />
+      <Image src={logo} alt="Anti-Agence, accueil" width={104} height={45} densities={[1, 2, 3]} quality="max" loading="eager" />
     </a>
 
     <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">

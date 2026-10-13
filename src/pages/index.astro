@@ -8,6 +8,7 @@ import { SITES } from '../data/tarifs';
 import OfferBanner from '../components/OfferBanner.astro';
 import CtaBand from '../components/CtaBand.astro';
 
+import monogramme from '../assets/brand/monogramme-anti-agence.png';
 import imgArtisan from '../assets/metiers/artisan-electricien.webp';
 import imgCommercant from '../assets/metiers/commercant-fleuriste.webp';
 import imgRestaurant from '../assets/metiers/restaurant-chef.webp';
@@ -202,12 +203,7 @@ const schema = [
         </div>
         <a class="link" href="/geo-definition-seo/">Lire le guide complet du GEO</a>
       </div>
-      <svg class="geo-mark" viewBox="0 0 512 512" aria-hidden="true" focusable="false">
-        <path d="M256 8A248 248 0 0 0 8 256h248z" />
-        <path d="M256 504a248 248 0 0 0 248-248H256z" />
-        <circle cx="374" cy="132" r="80" />
-        <circle cx="139" cy="369" r="80" />
-      </svg>
+      <Image src={monogramme} alt="" width={352} height={352} densities={[1, 2]} quality="max" class="geo-mark" />
     </div>
   </section>
 
@@ -362,7 +358,7 @@ const schema = [
     align-items: center;
   }
   .geo-text { margin-block: 1.5rem; }
-  .geo-mark { width: 100%; max-width: 22rem; justify-self: end; fill: var(--blue); }
+  .geo-mark { width: 100%; height: auto; max-width: 22rem; justify-self: end; border-radius: 1.5rem; }
 
   /* Responsive */
   @media (max-width: 64rem) {

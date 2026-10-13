@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets';
-import logo from '../assets/brand/logo-anti-agence.png';
+import logo from '../assets/brand/logo-anti-agence-blanc.png';
 import { METIERS, NAV, SITE } from '../data/site';
 
 const year = new Date().getFullYear();
@@ -8,7 +8,7 @@ const year = new Date().getFullYear();
 <footer class="footer">
   <div class="wrap footer-grid">
     <div class="footer-id">
-      <Image src={logo} alt="Anti-Agence" width={140} height={65} class="footer-logo" />
+      <Image src={logo} alt="Anti-Agence" width={140} height={61} densities={[1, 2, 3]} quality="max" class="footer-logo" />
       <p>{SITE.owner}, freelance création de site internet, SEO et GEO à {SITE.city}.</p>
       <address>
         <a href={`mailto:${SITE.email}`}>{SITE.email}</a><br />
@@ -53,7 +53,7 @@ const year = new Date().getFullYear();
     grid-template-columns: 2fr 1fr 1fr;
     gap: 3rem;
   }
-  .footer-logo { width: 140px; height: auto; filter: brightness(0) invert(1); margin-bottom: 1.5rem; }
+  .footer-logo { width: 140px; height: auto; margin-bottom: 1.5rem; }
   .footer-id p { max-width: 34ch; color: #c9c9cf; }
   address { font-style: normal; margin-top: 1.25rem; line-height: 1.9; }
   .footer-id .footer-pro { margin-top: 1rem; font-size: var(--fs-small); }
